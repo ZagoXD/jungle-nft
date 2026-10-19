@@ -96,7 +96,3 @@ Para alterar preço/estoque e emitir `nft.updated`, envie `POST /api/demo/nft` c
 Veja [ARCHITECTURE.md](ARCHITECTURE.md) para contratos REST/eventos, sessão, carrinho, cache, idempotência, reconciliação, decisões de UX e limitações.
 
 Os testes instalam um relógio com início conhecido nos cenários de fluxo, configuram a latência e disparam eventos pela API de demonstração. As dez baselines foram produzidas com Chromium 156 no Windows, fontes locais e movimento reduzido: oito telas completas e dois recortes das edições. O teste responsivo percorre as nove telas em 390, 768 e 1440 px e verifica texto ampliado. Os relatórios atuais e as condições das medições estão em [reports/README.md](reports/README.md).
-
-## Publicar na Vercel
-
-Importe o repositório, selecione Vite, use `npm run build` e saída `dist`. Mantenha os mocks habilitados. `vercel.json` prepara o fallback SPA, preservando os caminhos dos assets e do service worker. Depois de publicar, valide acesso direto e refresh de `/nft/nft-1`, `/login` e das rotas privadas após login. A publicação será realizada pelo responsável pelo projeto; nenhuma URL publicada faz parte desta entrega local.
