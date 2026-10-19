@@ -300,9 +300,32 @@ export const handlers = [
     return result
   }),
   endpoint('get', '/profile', (request) => identity(request, true).user!.profile),
-  endpoint('patch', '/profile', async (request) =>
-    updateProfile(identity(request, true).userId!, await body<Partial<Profile>>(request)),
-  ),
+  endpoint('patch', '/profile', async (request) => {
+    const { userId, user } = identity(request, true)
+    const { currentPassword, password, confirm, ...profile } = await body<
+      Partial<Profile> & { currentPassword?: string; password?: string; confirm?: string }
+    >(request)
+    let nextHash: string | undefined
+    if (currentPassword || password || confirm) {
+      if (user!.passwordHash !== (await passwordHash(currentPassword ?? '')))
+        failure(422, 'Senha atual incorreta.', { currentPassword: 'Senha atual incorreta.' })
+      if (!password || !passwordValid(password))
+        failure(422, 'Escolha uma senha mais forte.', {
+          password: 'Use 8 caracteres, maiúscula, minúscula e número.',
+        })
+      if (password !== confirm)
+        failure(422, 'As senhas precisam ser iguais.', {
+          confirm: 'As senhas precisam ser iguais.',
+        })
+      nextHash = await passwordHash(password!)
+    }
+    const updated = updateProfile(userId!, profile)
+    if (nextHash) {
+      user!.passwordHash = nextHash
+      persist()
+    }
+    return updated
+  }),
   endpoint('put', '/profile/password', async (request) => {
     const { user } = identity(request, true),
       input = await body<{ currentPassword: string; password: string }>(request)
@@ -326,8 +349,7 @@ export const handlers = [
     const { user } = identity(request, true),
       input = await body<{ action: 'connect' | 'decline' | 'disconnect' }>(request)
     if (!user!.wallets.some((wallet) => wallet.id === id)) failure(404, 'Carteira não encontrada.')
-    if (input.action === 'decline')
-      failure(409, 'Conexão recusada na simulação. Você pode tentar novamente.')
+    if (input.action === 'decline') failure(409, 'Conexão recusada. Você pode tentar novamente.')
     return { walletId: id, connected: input.action === 'connect' }
   }),
   // Scenario controls are a documented network API of this local demonstration, never production APIs.

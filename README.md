@@ -35,15 +35,19 @@ Antes dos testes/auditorias, instale o navegador com `npx playwright install --n
 
 As duas contas têm carteiras Ethereum fictícias. Cadastro cria uma conta independente, inicialmente sem carteira. É possível cadastrar uma carteira de teste usando `0x` seguido de 40 caracteres hexadecimais. As senhas são guardadas somente como hashes no simulador. Esse mecanismo demonstrativo não substitui autenticação de produção.
 
-Explore o catálogo, abra um NFT, escolha edição/quantidade e compre. O carrinho visitante é mesclado ao da conta no login, limitado pelo estoque. Use `KURIO10` para desconto de 10%; `EXPIRED` reproduz cupom expirado. Outros códigos são inválidos. No pagamento, conecte uma carteira simulada, revise os dados e confirme. Alterações posteriores da cotação exigem nova confirmação.
+Explore o catálogo, abra um NFT, escolha edição/quantidade e compre. O carrinho visitante é mesclado ao da conta no login, limitado pelo estoque. Use `KURIO10` para desconto de 10%; `EXPIRED` reproduz cupom expirado. Outros códigos são inválidos. No pagamento, conecte uma carteira de teste e preencha os dados. **Confirmar compra** abre a revisão exigida pelo desafio; o segundo clique confirma o envio. **Tem um código promocional? Aplique aqui** expande o campo de cupom. Alterações posteriores da cotação exigem nova confirmação.
 
-Após timeout, use **Recuperar tentativa**: o payload e a chave originais são reutilizados. Pedidos pendentes podem ser reabertos pela página de pedidos ou recarregados. Confirmação e recibo só aparecem após o estado confirmado retornado pela simulação. O explorador é explicitamente fictício.
+No carrinho, **Conectar e finalizar** abre login/cadastro em modal e mantém a URL e os itens. Após autenticar, a aplicação segue para o pagamento. Para quem já entrou na conta, **Finalizar** leva diretamente ao pagamento. Fechar o modal devolve o foco ao botão do carrinho.
+
+No mobile, **Trocar carteira** abre a escolha de rede e carteira cadastrada. **Confirmar compra** abre a revisão dos itens e valores. Nela, **Editar dados** abre o formulário do colecionador, validado por **Salvar dados** e novamente antes do envio; o código promocional também fica disponível na revisão. Os painéis de compra do NFT, resumo do carrinho e confirmação do pagamento ficam fixos no rodapé, enquanto o conteúdo mantém espaço para rolagem. A galeria permite deslizar horizontalmente e usar os controles anterior/próxima. A ordenação está nos filtros.
+
+Após timeout, use **Recuperar tentativa**: o payload e a chave originais são reutilizados. Pedidos pendentes podem ser reabertos pela página de pedidos ou recarregados. Confirmação e recibo só aparecem após o estado confirmado retornado pela simulação. O botão do explorador abre o registro local do pedido; não consulta uma blockchain real.
 
 ## Configuração e cenários
 
 `VITE_ENABLE_MOCKS=true` é o padrão; `.env.example` documenta a opção. Desabilitar MSW exige fornecer uma implementação compatível dos contratos; não existe backend de produção neste projeto.
 
-Abra **Cenários da demonstração** no rodapé ou visite `/demonstracao` para escolher sucesso, lentidão, vazio, falhas e alterações em tempo real, expirar a sessão ou restaurar os dados. Os cenários também podem ser controlados pelo endpoint de demonstração no console do navegador. Os controles abaixo são requisições reais interceptadas por MSW; não alteram estado React nem cache diretamente:
+Visite `/demonstracao` diretamente para escolher sucesso, lentidão, vazio, falhas e alterações em tempo real, expirar a sessão ou restaurar os dados. Os cenários também podem ser controlados pelo endpoint de demonstração no console do navegador. Os controles abaixo são requisições reais interceptadas por MSW; não alteram estado React nem cache diretamente:
 
 ```js
 // Restaurar todo o banco e o cenário padrão. Depois recarregue a página.
@@ -91,7 +95,7 @@ Para alterar preço/estoque e emitir `nft.updated`, envie `POST /api/demo/nft` c
 
 Veja [ARCHITECTURE.md](ARCHITECTURE.md) para contratos REST/eventos, sessão, carrinho, cache, idempotência, reconciliação, decisões de UX e limitações.
 
-Os testes instalam um relógio com início conhecido nos cenários de fluxo, configuram a latência e disparam eventos pela API de demonstração. As oito baselines foram produzidas com Chromium 156 no Windows, fontes locais e movimento reduzido. O teste responsivo percorre as nove telas em 390, 768 e 1440 px e verifica texto ampliado. Os relatórios atuais e as condições das medições estão em [reports/README.md](reports/README.md).
+Os testes instalam um relógio com início conhecido nos cenários de fluxo, configuram a latência e disparam eventos pela API de demonstração. As dez baselines foram produzidas com Chromium 156 no Windows, fontes locais e movimento reduzido: oito telas completas e dois recortes das edições. O teste responsivo percorre as nove telas em 390, 768 e 1440 px e verifica texto ampliado. Os relatórios atuais e as condições das medições estão em [reports/README.md](reports/README.md).
 
 ## Publicar na Vercel
 

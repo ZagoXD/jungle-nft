@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Socket } from 'socket.io-client'
 import type {
@@ -50,6 +51,12 @@ export function AppState({ children }: { children: ReactNode }) {
   })
   const [message, setMessage] = useState(''),
     [connected, setConnected] = useState(false)
+  const [noticePaused, setNoticePaused] = useState(false)
+  useEffect(() => {
+    if (!message || noticePaused) return
+    const timeout = window.setTimeout(() => setMessage(''), 6000)
+    return () => window.clearTimeout(timeout)
+  }, [message, noticePaused])
   const user = session.data?.user ?? null
   const lastUser = useRef<string | null>(null)
   const epoch = useRef(0)
@@ -140,7 +147,7 @@ export function AppState({ children }: { children: ReactNode }) {
         if (!accept(event, 'order')) return
         setMessage(
           event.order.status === 'confirmed'
-            ? 'Pedido confirmado na simulação.'
+            ? 'Pedido confirmado.'
             : event.order.status === 'declined'
               ? 'Pagamento recusado. Seu carrinho foi preservado.'
               : 'Pedido atualizado.',
@@ -187,16 +194,32 @@ export function AppState({ children }: { children: ReactNode }) {
       value={{ user, loading: session.isPending, establish, logout, notice, connected }}
     >
       {children}
-      <div className="toast" role="status" aria-live="polite">
-        {message && (
-          <>
-            <span>{message}</span>
-            <button onClick={() => setMessage('')} aria-label="Fechar notificação">
-              ×
-            </button>
-          </>
-        )}
-      </div>
+      {createPortal(
+        <div
+          className="toast"
+          role="status"
+          aria-live="polite"
+          onPointerDown={(event) => {
+            event.preventDefault()
+            event.stopPropagation()
+          }}
+          onClick={(event) => event.stopPropagation()}
+          onMouseEnter={() => setNoticePaused(true)}
+          onMouseLeave={() => setNoticePaused(false)}
+          onFocus={() => setNoticePaused(true)}
+          onBlur={() => setNoticePaused(false)}
+        >
+          {message && (
+            <>
+              <span>{message}</span>
+              <button onClick={() => setMessage('')} aria-label="Fechar notificação">
+                ×
+              </button>
+            </>
+          )}
+        </div>,
+        document.body,
+      )}
     </SessionContext>
   )
 }

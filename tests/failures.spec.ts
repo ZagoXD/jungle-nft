@@ -8,16 +8,16 @@ test.beforeEach(async ({ page }) => {
 test('03b cadastro valida campos, conflito e criação de uma conta isolada', async ({ page }) => {
   await page.goto('/cadastro')
   const dialog = page.getByRole('dialog', { name: 'Criar conta', exact: true })
-  await dialog.getByRole('button', { name: 'Criar conta', exact: true }).click()
+  await dialog.getByRole('button', { name: /^Criar (conta|perfil)$/ }).click()
   await expect(dialog.getByLabel('E-mail', { exact: true })).toHaveAttribute('aria-invalid', 'true')
   await dialog.getByLabel('Nome de usuário', { exact: true }).fill('Nova Colecionadora')
   await dialog.getByLabel('E-mail', { exact: true }).fill('alice@example.test')
   await dialog.getByLabel('Senha', { exact: true }).fill('Colecionador123!')
   await dialog.getByLabel('Confirmar senha', { exact: true }).fill('Colecionador123!')
-  await dialog.getByRole('button', { name: 'Criar conta', exact: true }).click()
+  await dialog.getByRole('button', { name: /^Criar (conta|perfil)$/ }).click()
   await expect(dialog.getByText('Este e-mail já está cadastrado.', { exact: true })).toBeVisible()
   await dialog.getByLabel('E-mail', { exact: true }).fill('nova@example.test')
-  await dialog.getByRole('button', { name: 'Criar conta', exact: true }).click()
+  await dialog.getByRole('button', { name: /^Criar (conta|perfil)$/ }).click()
   await expect(dialog).not.toBeVisible()
   expect((await request(page, 'GET', '/session')).data.user.email).toBe('nova@example.test')
   expect((await request(page, 'GET', '/wallets')).data).toEqual([])
@@ -31,7 +31,7 @@ test('07 pagamento recusado, clique duplo e timeout recuperado com a mesma chave
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).dblclick()
   await expect(page.getByRole('heading', { name: 'Pagamento recusado', exact: true })).toBeVisible()
   expect((await request(page, 'GET', '/orders')).data).toHaveLength(1)
@@ -40,7 +40,7 @@ test('07 pagamento recusado, clique duplo e timeout recuperado com a mesma chave
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(
     page.getByRole('heading', { name: 'Uma tentativa de compra está em andamento' }),
@@ -78,7 +78,7 @@ test('08 perfil, avatar, senha e carteiras persistem com validação', async ({ 
         ),
       ),
     )
-  await page.getByRole('button', { name: 'Salvar perfil', exact: true }).click()
+  await page.getByRole('button', { name: 'Salvar', exact: true }).click()
   await expect(page.locator('.toast')).toContainText('Perfil atualizado')
   await page.reload()
   await expect(page.getByLabel('Nome de exibição', { exact: true })).toHaveValue(
@@ -88,14 +88,14 @@ test('08 perfil, avatar, senha e carteiras persistem com validação', async ({ 
   await page.getByLabel('Senha atual', { exact: true }).fill('errada')
   await page.getByLabel('Nova senha', { exact: true }).fill('NovaSenha456!')
   await page.getByLabel('Confirmar nova senha', { exact: true }).fill('NovaSenha456!')
-  await page.getByRole('button', { name: 'Alterar senha', exact: true }).click()
+  await page.getByRole('button', { name: 'Salvar', exact: true }).click()
   await expect(page.getByLabel('Senha atual', { exact: true })).toHaveAttribute(
     'aria-invalid',
     'true',
   )
   await page.getByLabel('Senha atual', { exact: true }).fill('Colecionador123!')
-  await page.getByRole('button', { name: 'Alterar senha', exact: true }).click()
-  await expect(page.locator('.toast')).toContainText('Senha alterada')
+  await page.getByRole('button', { name: 'Salvar', exact: true }).click()
+  await expect(page.locator('.toast')).toContainText('Perfil atualizado')
   await page.getByRole('button', { name: 'Sair', exact: true }).click()
   await login(page, 'alice@example.test', 'NovaSenha456!', '/carteiras')
   await page.getByLabel('Apelido da carteira', { exact: true }).fill('Coleção Ethereum')
@@ -108,15 +108,17 @@ test('08 perfil, avatar, senha e carteiras persistem com validação', async ({ 
   await page.getByLabel('Endereço da carteira', { exact: true }).fill(`0x${'c'.repeat(40)}`)
   await page.getByRole('button', { name: 'Salvar carteira', exact: true }).click()
   await expect(page.locator('.toast')).toContainText('Carteira salva')
-  await page.getByRole('button', { name: 'Adicionar carteira', exact: true }).click()
+  await page.getByRole('button', { name: 'Adicionar', exact: true }).first().click()
   const secondary = page.locator('.wallet-form').last()
   await secondary.getByLabel('Apelido da carteira', { exact: true }).fill('Reserva Polygon')
   await secondary.getByLabel('Endereço da carteira', { exact: true }).fill(`0x${'d'.repeat(40)}`)
   await secondary.getByRole('combobox', { name: /^Rede/ }).selectOption('Polygon')
   await secondary.getByRole('button', { name: 'Salvar carteira', exact: true }).click()
-  await expect(
-    page.getByRole('heading', { name: 'Carteira secundária', exact: true }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Nova carteira', exact: true })).toBeHidden()
+  await expect(page.locator('.toast')).toContainText('Carteira salva')
+  await expect(page.getByLabel('Apelido da carteira', { exact: true }).nth(1)).toHaveValue(
+    'Reserva Polygon',
+  )
   await page.reload()
   await expect(page.getByLabel('Apelido da carteira', { exact: true }).nth(1)).toHaveValue(
     'Reserva Polygon',
@@ -133,7 +135,7 @@ test('10 pendente desconecta, reconcilia, ignora eventos antigos e preserva quan
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(
     page.getByRole('heading', { name: 'Aguardando confirmação', exact: true }),

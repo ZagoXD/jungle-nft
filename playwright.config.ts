@@ -14,6 +14,7 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop',
+      testIgnore: '**/mobile-review.spec.ts',
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chromium',

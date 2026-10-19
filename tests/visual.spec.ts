@@ -27,11 +27,15 @@ test('regressão visual início, detalhe, carrinho e pagamento', async ({ page }
   await capture('inicio')
   await page.goto('/nft/nft-1')
   await expect(page.getByRole('button', { name: /^(COMPRAR|Comprar NFT)$/ })).toBeVisible()
+  await expect(page.locator('.edition-picker')).toHaveScreenshot('edicoes.png', {
+    animations: 'disabled',
+    maxDiffPixelRatio: 0.001,
+  })
   await capture('detalhe')
   await addFromDetail(page)
   await capture('carrinho')
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await expect(page.getByRole('button', { name: 'Revisar compra', exact: true })).toBeEnabled()
+  await expect(page.getByRole('button', { name: 'Confirmar compra', exact: true })).toBeEnabled()
   await capture('pagamento')
 })

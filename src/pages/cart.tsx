@@ -1,17 +1,27 @@
 import { responsiveImage } from '../lib/images'
-import { useState, type ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
+import { lazy, Suspense, useState, type ReactNode } from 'react'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import type { CartItem, Nft, Quote } from '../domain/contracts'
 import { formatEth, multiplyEth } from '../domain/money'
 import { api } from '../lib/api'
-import { useApiMutation, useCart, useQuote } from '../lib/state'
-import { EmptyState, ErrorState, PageHeading, Skeleton } from '../components/shared'
+import { useApiMutation, useCart, useQuote, useSession } from '../lib/state'
+import { tokenId, EmptyState, ErrorState, PageHeading, Skeleton } from '../components/shared'
 import { Button } from '../components/ui/button'
 import { Dialog } from '../components/ui/dialog'
 import { RelatedNfts } from './detail'
+import { useMobileDock } from '../lib/mobileDock'
 
-export function CouponForm() {
+const CartAuthDialog = lazy(() => import('./auth').then((page) => ({ default: page.AuthPage })))
+
+export function CouponForm({
+  collapsed = false,
+  id = 'coupon',
+}: {
+  collapsed?: boolean
+  id?: string
+}) {
+  const [expanded, setExpanded] = useState(!collapsed)
   const cart = useCart(),
     [coupon, setCoupon] = useState('')
   const apply = useApiMutation<{ coupon: string }>(
@@ -23,28 +33,40 @@ export function CouponForm() {
     remove = useApiMutation('delete', '/cart/coupon', ['cart', 'quote'], 'Cupom removido.')
   return (
     <div className="coupon">
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
-          apply.mutate({ coupon })
-        }}
-      >
-        <label htmlFor="coupon">Código promocional</label>
-        <div className="inline">
-          <input
-            id="coupon"
-            placeholder="Digite o código promocional..."
-            value={coupon}
-            onChange={(event) => setCoupon(event.target.value)}
-            aria-describedby={apply.isError ? 'coupon-error' : undefined}
-          />
-          <Button size="sm" disabled={apply.isPending || !coupon.trim()}>
-            Aplicar
-          </Button>
-        </div>
-      </form>
+      {!expanded && (
+        <button
+          className="coupon-toggle"
+          type="button"
+          aria-expanded={expanded}
+          onClick={() => setExpanded(true)}
+        >
+          Tem um código promocional? Aplique aqui
+        </button>
+      )}
+      {expanded && (
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
+            apply.mutate({ coupon })
+          }}
+        >
+          <label htmlFor={id}>Código promocional</label>
+          <div className="inline">
+            <input
+              id={id}
+              placeholder="Digite o código promocional..."
+              value={coupon}
+              onChange={(event) => setCoupon(event.target.value)}
+              aria-describedby={apply.isError ? `${id}-error` : undefined}
+            />
+            <Button size="sm" disabled={apply.isPending || !coupon.trim()}>
+              Aplicar
+            </Button>
+          </div>
+        </form>
+      )}
       {apply.isError && (
-        <p id="coupon-error" className="field-error" role="alert">
+        <p id={`${id}-error`} className="field-error" role="alert">
           {apply.error && 'Cupom inválido ou expirado. Confira o código e tente novamente.'}
         </p>
       )}
@@ -64,22 +86,40 @@ export function CouponForm() {
     </div>
   )
 }
-export function QuoteSummary({ quote, children }: { quote: Quote; children?: ReactNode }) {
+export function QuoteSummary({
+  quote,
+  children,
+  receipt = false,
+}: {
+  quote: Quote
+  children?: ReactNode
+  receipt?: boolean
+}) {
   return (
     <>
       <dl className="quote-values">
-        <div>
-          <dt>Subtotal</dt>
-          <dd>{formatEth(quote.subtotal)} ETH</dd>
-        </div>
-        <div>
-          <dt>Desconto do lançamento</dt>
-          <dd>− {formatEth(quote.discount)} ETH</dd>
-        </div>
+        {(!receipt || formatEth(quote.discount) !== '0') && (
+          <>
+            <div>
+              <dt>Subtotal</dt>
+              <dd>{formatEth(quote.subtotal)} ETH</dd>
+            </div>
+            <div>
+              <dt>Desconto do lançamento</dt>
+              <dd>− {formatEth(quote.discount)} ETH</dd>
+            </div>
+          </>
+        )}
         <div>
           <dt>Taxa de rede</dt>
           <dd>{formatEth(quote.fee)} ETH</dd>
         </div>
+        {!receipt && (
+          <div className="estimated-fee">
+            <dt className="sr-only">Informação da taxa</dt>
+            <dd>Taxa estimada</dd>
+          </div>
+        )}
         <div className="quote-total">
           <dt>Total</dt>
           <dd data-testid="quote-total">{formatEth(quote.total)} ETH</dd>
@@ -144,8 +184,11 @@ function CartLine({ item }: { item: CartItem }) {
           <Link to="/nft/$id" params={{ id: item.nftId }}>
             <h2>{value.name}</h2>
           </Link>
-          <p>ID do token: #{item.nftId.replace('nft-', '').padStart(4, '0')}</p>
-          <small>{edition?.name}</small>
+          <p>ID do token: #{tokenId(value.name)}</p>
+          <small>
+            <span className="mobile-only">Edição: </span>
+            {edition?.name}
+          </small>
           {outOfStock && (
             <p role="alert" className="field-error">
               Disponibilidade: {edition?.stock ?? 0}. Ajuste a quantidade ou remova o item.
@@ -202,6 +245,10 @@ function CartLine({ item }: { item: CartItem }) {
   )
 }
 export function CartPage() {
+  const { ref: dockRef } = useMobileDock()
+  const { user, loading } = useSession(),
+    navigate = useNavigate()
+  const [authOpen, setAuthOpen] = useState(false)
   const cart = useCart(),
     quote = useQuote()
   return (
@@ -239,7 +286,7 @@ export function CartPage() {
               ))}
             </div>
           </section>
-          <aside className="cart-summary">
+          <aside className="cart-summary" ref={dockRef} aria-label="Resumo da compra">
             <h2>Resumo da carteira</h2>
             <CouponForm />
             {quote.isPending ? (
@@ -248,8 +295,17 @@ export function CartPage() {
               <ErrorState error={quote.error} retry={() => void quote.refetch()} />
             ) : (
               <QuoteSummary quote={quote.data}>
-                <Button asChild className="full-width">
-                  <Link to="/pagamento">Conectar e finalizar</Link>
+                <Button
+                  id="cart-checkout"
+                  type="button"
+                  className="full-width"
+                  disabled={loading}
+                  onClick={() => {
+                    if (user) void navigate({ to: '/pagamento' })
+                    else setAuthOpen(true)
+                  }}
+                >
+                  {user ? 'Finalizar' : 'Conectar e finalizar'}
                 </Button>
                 <Link className="continue-link" to="/" hash="catalogo">
                   Continuar explorando
@@ -259,7 +315,19 @@ export function CartPage() {
           </aside>
         </div>
       )}
-      <RelatedNfts />
+      <RelatedNfts title="Colecionadores também viram" />
+      {authOpen && (
+        <Suspense fallback={<p role="status">Abrindo acesso à sua conta…</p>}>
+          <CartAuthDialog
+            inline
+            onClose={() => setAuthOpen(false)}
+            onAuthenticated={() => {
+              setAuthOpen(false)
+              void navigate({ to: '/pagamento' })
+            }}
+          />
+        </Suspense>
+      )}
     </>
   )
 }

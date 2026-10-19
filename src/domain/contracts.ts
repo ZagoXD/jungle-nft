@@ -1,6 +1,6 @@
 /** All ETH values cross the network as decimal strings. Never coerce them to Number. */
 export type Eth = string
-export type Network = 'Ethereum' | 'Polygon'
+export type Network = 'Ethereum' | 'Polygon' | 'Solana'
 export interface Edition {
   id: string
   name: string
@@ -13,6 +13,8 @@ export interface Nft {
   creator: string
   category: string
   price: Eth
+  compareAtPrice?: Eth
+  rarity?: string
   image: string
   gallery: string[]
   description: string

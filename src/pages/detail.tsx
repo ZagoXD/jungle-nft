@@ -1,23 +1,37 @@
 import { responsiveImage } from '../lib/images'
-import { useState } from 'react'
+import { useMobileDock } from '../lib/mobileDock'
+import { useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import type { Catalog, Nft } from '../domain/contracts'
 import { formatEth } from '../domain/money'
 import { api, statusOf } from '../lib/api'
 import { useApiMutation, useSession } from '../lib/state'
-import { EmptyState, ErrorState, FavoriteButton, NftCard, Skeleton } from '../components/shared'
+import {
+  tokenId,
+  EmptyState,
+  ErrorState,
+  FavoriteButton,
+  NftCard,
+  Skeleton,
+} from '../components/shared'
 import { Button } from '../components/ui/button'
 import { Dialog } from '../components/ui/dialog'
 
-export function RelatedNfts({ exclude = '' }: { exclude?: string }) {
+export function RelatedNfts({
+  exclude = '',
+  title = 'Mais desta coleção',
+}: {
+  exclude?: string
+  title?: string
+}) {
   const query = useQuery({
     queryKey: ['catalog', 'related'],
     queryFn: async ({ signal }) => (await api.get<Catalog>('/nfts', { signal })).data,
   })
   return (
     <section className="related">
-      <h2>Mais desta coleção</h2>
+      <h2>{title}</h2>
       {query.isPending ? (
         <Skeleton />
       ) : query.isError ? (
@@ -25,8 +39,11 @@ export function RelatedNfts({ exclude = '' }: { exclude?: string }) {
       ) : (
         <div className="related-grid">
           {query.data.items
-            .filter((nft) => nft.id !== exclude)
-            .slice(2, 7)
+            .filter(
+              (nft) =>
+                ['nft-4', 'nft-5', 'nft-6', 'nft-7', 'nft-9'].includes(nft.id) &&
+                nft.id !== exclude,
+            )
             .map((nft) => (
               <NftCard key={nft.id} nft={nft} />
             ))}
@@ -43,6 +60,7 @@ export function RelatedNfts({ exclude = '' }: { exclude?: string }) {
   )
 }
 export function DetailPage() {
+  const { ref: dockRef } = useMobileDock()
   const { id } = useParams({ strict: false }),
     navigate = useNavigate(),
     { notice } = useSession()
@@ -50,6 +68,7 @@ export function DetailPage() {
     queryKey: ['nft', id],
     queryFn: async ({ signal }) => (await api.get<Nft>(`/nfts/${id}`, { signal })).data,
   })
+  const swipeStart = useRef<{ x: number; y: number } | null>(null)
   const [quantity, setQuantity] = useState(1),
     [editionId, setEditionId] = useState('standard'),
     [image, setImage] = useState(0),
@@ -120,11 +139,51 @@ export function DetailPage() {
             <img
               {...responsiveImage(gallery[image], '(max-width: 600px) 90vw, 404px')}
               src={gallery[image]}
-              alt={nft.name}
+              alt={`${nft.name}, imagem ${image + 1} de ${gallery.length}`}
+              onPointerDown={(event) => {
+                swipeStart.current = { x: event.clientX, y: event.clientY }
+                event.currentTarget.setPointerCapture(event.pointerId)
+              }}
+              onPointerUp={(event) => {
+                const start = swipeStart.current
+                swipeStart.current = null
+                if (!start) return
+                const dx = event.clientX - start.x,
+                  dy = event.clientY - start.y
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy))
+                  setImage(
+                    (current) => (current + (dx < 0 ? 1 : gallery.length - 1)) % gallery.length,
+                  )
+              }}
+              onPointerCancel={() => {
+                swipeStart.current = null
+              }}
+              draggable={false}
               width="404"
               height="404"
               fetchPriority="high"
             />
+            {gallery.length > 1 && (
+              <div className="gallery-mobile-controls" aria-label="Navegação da galeria">
+                <button
+                  aria-label="Imagem anterior"
+                  onClick={() =>
+                    setImage((current) => (current + gallery.length - 1) % gallery.length)
+                  }
+                >
+                  ‹
+                </button>
+                <span aria-live="polite">
+                  {image + 1}/{gallery.length}
+                </span>
+                <button
+                  aria-label="Próxima imagem"
+                  onClick={() => setImage((current) => (current + 1) % gallery.length)}
+                >
+                  ›
+                </button>
+              </div>
+            )}
             <Button
               variant="ghost"
               size="icon"
@@ -194,8 +253,9 @@ export function DetailPage() {
                 </label>
               ))}
           </fieldset>
-          <div className="buy-row">
+          <div className="buy-row" ref={dockRef} role="group" aria-label="Comprar este NFT">
             <div className="quantity-control">
+              <span className="mobile-only">Qtd.</span>
               <button
                 aria-label="Diminuir quantidade"
                 disabled={quantity <= 1}
@@ -261,7 +321,7 @@ export function DetailPage() {
           </div>
           <p className="availability">{edition.stock} unidade(s) disponível(is)</p>
           <div className="product-meta">
-            <p>ID do token: #{nft.id.replace('nft-', '').padStart(4, '0')}</p>
+            <p>ID do token: #{tokenId(nft.name)}</p>
             <p>Coleção: {nft.collection}</p>
             <p>Atributos: Óculos, Esmeralda, Raro</p>
           </div>
@@ -291,7 +351,12 @@ export function DetailPage() {
         </div>
       </section>
       <Dialog open={zoom} onOpenChange={setZoom} title={nft.name}>
-        <img src={nft.image} alt={`Imagem ampliada de ${nft.name}`} width="1254" height="1254" />
+        <img
+          src={gallery[image]}
+          alt={`Imagem ampliada de ${nft.name}`}
+          width="1254"
+          height="1254"
+        />
       </Dialog>
       <section className="product-description">
         <div className="description-tabs" role="tablist" aria-label="Informações da obra">
@@ -317,9 +382,9 @@ export function DetailPage() {
         {tab === 'details' ? (
           <div role="tabpanel" id="detail-panel" aria-labelledby="detail-tab">
             <p>
-              {nft.name} é uma obra digital finalizada à mão da coleção Kurio Editions. Cada
-              atributo fica armazenado nos metadados do token. A obra explora identidade, movimento
-              e luz em um mundo digital sem fronteiras.
+              {nft.name} é uma obra digital 1/50 finalizada à mão da coleção Kurio Editions. Cada
+              atributo fica armazenado nos metadados do token e verificado na {nft.network}. A obra
+              explora identidade, movimento e luz em um mundo digital sem fronteiras.
             </p>
             <p>
               A propriedade inclui a arte em alta resolução, lançamentos exclusivos para
@@ -328,20 +393,22 @@ export function DetailPage() {
               lançamentos da comunidade.
             </p>
             <h3>Rede:</h3>
-            <p>Cunhado na {nft.network} com procedência e metadados na simulação.</p>
-            <h3>Contrato:</h3>
-            <p>0x7A42...19E8 · Referência demonstrativa ERC-721.</p>
-            <h3>Direitos autorais:</h3>
             <p>
-              Direitos autorais do criador: 5% nas vendas secundárias, pagos pelos mercados
-              compatíveis.
+              Cunhado na {nft.network} com procedência imutável e metadados armazenados no IPFS.
             </p>
+            <h3>Contrato:</h3>
+            <p>
+              Direitos autorais do criador: 5% nas vendas secundárias, pagos automaticamente pelos
+              mercados compatíveis.
+            </p>
+            <h3>Direitos autorais:</h3>
+            <p>0x7A42...19E8 • Contrato inteligente ERC-721 verificado.</p>
           </div>
         ) : (
           <div role="tabpanel" id="review-panel" aria-labelledby="review-tab">
             <p>
-              As avaliações do layout são ilustrativas. Esta demonstração não permite publicar
-              avaliações.
+              Estamos preparando as avaliações dos colecionadores. Em breve você poderá compartilhar
+              sua experiência.
             </p>
           </div>
         )}

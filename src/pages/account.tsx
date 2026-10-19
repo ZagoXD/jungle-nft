@@ -18,7 +18,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
           {[
             ['/perfil', 'Dados do perfil', 'browser-user-70420-4599.svg'],
             ['/carteiras', 'Carteiras', 'browser-location-70420-4602.svg'],
-            ['/pedidos', 'Meus pedidos', 'browser-shopping-1-70420-4605.svg'],
+            ['/pedidos', 'Atividade', 'browser-shopping-1-70420-4605.svg'],
             ['/favoritos', 'Lista de interesse', 'browser-heart-1-70420-4609.svg'],
           ].map(([to, text, source]) => (
             <Link key={to} to={to} activeProps={{ className: 'active' }}>
@@ -33,7 +33,9 @@ export function AccountLayout({ children }: { children: ReactNode }) {
           ].map(([text, source]) => (
             <button
               key={text}
-              onClick={() => notice('Esta ação está fora do escopo da demonstração.')}
+              onClick={() =>
+                notice('Ainda estamos trabalhando nesta página. Ela estará disponível em breve.')
+              }
             >
               <img src={`/images/vectors/${source}`} alt="" />
               {text}
@@ -71,7 +73,9 @@ export function ProfilePage() {
 function ProfileEditor({ profile }: { profile: Profile }) {
   const [avatar, setAvatar] = useState(profile.avatar),
     { notice } = useSession()
-  const form = useForm<Profile>({ defaultValues: profile }),
+  const form = useForm<Profile & { currentPassword: string; password: string; confirm: string }>({
+      defaultValues: { ...profile, currentPassword: '', password: '', confirm: '' },
+    }),
     errors = form.formState.errors
   const save = useApiMutation<Partial<Profile>>(
     'patch',
@@ -88,9 +92,14 @@ function ProfileEditor({ profile }: { profile: Profile }) {
           save.mutate(
             { ...values, avatar },
             {
+              onSuccess: () => {
+                form.resetField('currentPassword')
+                form.resetField('password')
+                form.resetField('confirm')
+              },
               onError: (error) => {
                 for (const [field, message] of Object.entries(fieldErrors(error)))
-                  form.setError(field as keyof Profile, { message })
+                  form.setError(field as keyof typeof values, { message })
               },
             },
           ),
@@ -130,15 +139,23 @@ function ProfileEditor({ profile }: { profile: Profile }) {
             error={errors.email?.message}
           />
           <Field
+            ens
+            value={form.watch('ens')}
             label="Nome ENS"
-            placeholder="seunome.eth"
+            required
             {...form.register('ens', {
+              required: 'Informe o nome ENS.',
               validate: (value) =>
                 !value || /^[\w-]{3,30}\.eth$/.test(value) || 'Use um nome terminado em .eth.',
             })}
             error={errors.ens?.message}
           />
-          <Field label="Apelido da carteira" {...form.register('walletAlias')} />
+          <Field
+            label="Apelido da carteira"
+            required
+            {...form.register('walletAlias', { required: 'Informe um apelido.' })}
+            error={errors.walletAlias?.message}
+          />
           <div className="field">
             <label htmlFor="avatar">Avatar</label>
             <div className="avatar-control">
@@ -176,122 +193,72 @@ function ProfileEditor({ profile }: { profile: Profile }) {
                 }}
               />
               <Button type="button" variant="ghost" size="sm" onClick={() => setAvatar('')}>
-                Remover avatar
+                Remover
               </Button>
             </div>
           </div>
-          <div className="field form-full">
-            <label htmlFor="bio">Sobre você</label>
-            <textarea
-              id="bio"
-              rows={3}
-              {...form.register('bio', {
-                maxLength: { value: 300, message: 'Use até 300 caracteres.' },
-              })}
-              aria-invalid={!!errors.bio}
-              aria-describedby={errors.bio ? 'bio-error' : undefined}
-            />
-            {errors.bio && (
-              <p id="bio-error" role="alert" className="field-error">
-                {errors.bio.message}
-              </p>
-            )}
-          </div>
         </div>
+        <section className="password-form stack">
+          <h2>Alterar senha</h2>
+          <Field
+            label="Senha atual"
+            type="password"
+            autoComplete="current-password"
+            {...form.register('currentPassword', {
+              validate: (value) =>
+                !form.getValues('password') || !!value || 'Informe sua senha atual.',
+            })}
+            error={errors.currentPassword?.message}
+          />
+          <Field
+            label="Nova senha"
+            type="password"
+            autoComplete="new-password"
+            {...form.register('password', {
+              validate: (value) =>
+                (!value && !form.getValues('currentPassword') && !form.getValues('confirm')) ||
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value) ||
+                'Use 8 caracteres, maiúscula, minúscula e número.',
+            })}
+            error={errors.password?.message}
+          />
+          <Field
+            label="Confirmar nova senha"
+            type="password"
+            autoComplete="new-password"
+            {...form.register('confirm', {
+              validate: (value) =>
+                value === form.getValues('password') || 'As senhas precisam ser iguais.',
+            })}
+            error={errors.confirm?.message}
+          />
+        </section>
         {save.isError && (
           <p className="field-error" role="alert">
             {errorMessage(save.error)}
           </p>
         )}
         <Button type="submit" disabled={save.isPending} className="align-start">
-          {save.isPending ? 'Salvando…' : 'Salvar perfil'}
+          {save.isPending ? 'Salvando…' : 'Salvar'}
         </Button>
       </form>
-      <PasswordForm />
     </>
-  )
-}
-function PasswordForm() {
-  const form = useForm<{ currentPassword: string; password: string; confirm: string }>(),
-    mutation = useApiMutation<{ currentPassword: string; password: string }>(
-      'put',
-      '/profile/password',
-      [],
-      'Senha alterada na simulação.',
-    )
-  return (
-    <form
-      className="password-form stack"
-      onSubmit={form.handleSubmit((values) => {
-        if (values.password !== values.confirm) {
-          form.setError('confirm', { message: 'As senhas precisam ser iguais.' })
-          return
-        }
-        mutation.mutate(values, {
-          onSuccess: () => form.reset(),
-          onError: (error) => {
-            for (const [field, message] of Object.entries(fieldErrors(error)))
-              form.setError(field as 'password' | 'currentPassword', { message })
-          },
-        })
-      })}
-      noValidate
-    >
-      <h2>Alterar senha</h2>
-      <Field
-        label="Senha atual"
-        type="password"
-        autoComplete="current-password"
-        required
-        {...form.register('currentPassword', { required: 'Informe sua senha atual.' })}
-        error={form.formState.errors.currentPassword?.message}
-      />
-      <Field
-        label="Nova senha"
-        type="password"
-        autoComplete="new-password"
-        required
-        {...form.register('password', {
-          required: 'Informe uma nova senha.',
-          pattern: {
-            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-            message: 'Use 8 caracteres, maiúscula, minúscula e número.',
-          },
-        })}
-        error={form.formState.errors.password?.message}
-      />
-      <Field
-        label="Confirmar nova senha"
-        type="password"
-        autoComplete="new-password"
-        required
-        {...form.register('confirm', { required: 'Confirme a senha.' })}
-        error={form.formState.errors.confirm?.message}
-      />
-      {mutation.isError && (
-        <p className="field-error" role="alert">
-          {errorMessage(mutation.error)}
-        </p>
-      )}
-      <Button className="align-start" disabled={mutation.isPending}>
-        Alterar senha
-      </Button>
-    </form>
   )
 }
 export function WalletsPage() {
   const wallets = useWallets(),
-    [adding, setAdding] = useState(false)
+    [adding, setAdding] = useState(false),
+    [copyPrimary, setCopyPrimary] = useState(false)
   return (
     <AccountLayout>
       <div className="section-heading">
-        <h1>Minhas carteiras</h1>
+        <h1>Carteira principal</h1>
         <Button variant="ghost" onClick={() => setAdding(true)}>
-          Adicionar carteira
+          Adicionar
         </Button>
       </div>
       <p className="muted">
-        Estas carteiras ficam disponíveis no pagamento e para receber NFTs comprados na simulação.
+        Estas carteiras ficam disponíveis no pagamento e para receber NFTs comprados.
       </p>
       {wallets.isPending ? (
         <Skeleton type="detail" />
@@ -308,8 +275,43 @@ export function WalletsPage() {
               action={<Button onClick={() => setAdding(true)}>Cadastrar carteira</Button>}
             />
           )}
+          {!wallets.data.some((wallet) => !wallet.primary) && (
+            <section className="secondary-wallet-empty">
+              <div className="section-heading">
+                <h2>Carteira secundária</h2>
+                <label className="inline copy-primary">
+                  <input
+                    type="checkbox"
+                    checked={copyPrimary}
+                    onChange={(event) => {
+                      setCopyPrimary(event.target.checked)
+                      setAdding(true)
+                    }}
+                  />
+                  Igual à carteira principal
+                </label>
+                <Button variant="ghost" onClick={() => setAdding(true)}>
+                  Adicionar
+                </Button>
+              </div>
+              <p className="muted">Você ainda não adicionou uma carteira secundária.</p>
+            </section>
+          )}
           {adding && (
-            <WalletEditor onSaved={() => setAdding(false)} onCancel={() => setAdding(false)} />
+            <WalletEditor
+              key={copyPrimary ? 'copy-primary' : 'new-wallet'}
+              initialValues={
+                copyPrimary ? wallets.data.find((wallet) => wallet.primary) : undefined
+              }
+              onSaved={() => {
+                setAdding(false)
+                setCopyPrimary(false)
+              }}
+              onCancel={() => {
+                setAdding(false)
+                setCopyPrimary(false)
+              }}
+            />
           )}
         </>
       )}
@@ -320,26 +322,32 @@ function WalletEditor({
   wallet,
   onSaved,
   onCancel,
+  initialValues,
 }: {
+  initialValues?: Wallet
   wallet?: Wallet
   onSaved?: () => void
   onCancel?: () => void
 }) {
   const { user } = useSession(),
     form = useForm<Wallet>({
-      defaultValues: wallet ?? {
-        name: '',
-        address: '',
-        network: 'Ethereum',
-        primary: false,
-        displayName: user?.name,
-        email: user?.email,
-        profileName: user?.username,
-        type: 'MetaMask',
-        referral: 'KURIO',
-        ens: `${user?.username}.eth`,
-        secondaryAddress: '',
-      },
+      defaultValues:
+        wallet ??
+        (initialValues
+          ? { ...initialValues, id: undefined, primary: false }
+          : {
+              name: '',
+              address: '',
+              network: 'Ethereum',
+              primary: false,
+              displayName: user?.name,
+              email: user?.email,
+              profileName: user?.username,
+              type: 'MetaMask',
+              referral: 'KURIO',
+              ens: `${user?.username}.eth`,
+              secondaryAddress: '',
+            }),
     }),
     errors = form.formState.errors
   const save = useApiMutation<Wallet>(
@@ -362,9 +370,7 @@ function WalletEditor({
       )}
       noValidate
     >
-      <h2>
-        {wallet ? (wallet.primary ? 'Carteira principal' : 'Carteira secundária') : 'Nova carteira'}
-      </h2>
+      {(!wallet || !wallet.primary) && <h2>{wallet ? 'Carteira secundária' : 'Nova carteira'}</h2>}
       <div className="form-grid">
         <Field
           label="Nome de exibição"
@@ -386,6 +392,9 @@ function WalletEditor({
             Rede <span className="required">*</span>
           </label>
           <select id={`network-${wallet?.id ?? 'new'}`} {...form.register('network')}>
+            <option value="" disabled>
+              Selecione uma rede
+            </option>
             <option>Ethereum</option>
             <option>Polygon</option>
           </select>
@@ -410,6 +419,8 @@ function WalletEditor({
           error={errors.address?.message}
         />
         <Field
+          hiddenLabel
+          placeholder="ENS ou carteira secundária (opcional)"
           label="ENS ou carteira secundária (opcional)"
           {...form.register('secondaryAddress', {
             validate: (value) =>
@@ -425,6 +436,9 @@ function WalletEditor({
             Tipo de carteira <span className="required">*</span>
           </label>
           <select id={`type-${wallet?.id ?? 'new'}`} {...form.register('type')}>
+            <option value="" disabled>
+              Selecione uma carteira
+            </option>
             <option>MetaMask</option>
             <option>WalletConnect</option>
             <option>Coinbase Wallet</option>
@@ -440,7 +454,7 @@ function WalletEditor({
           error={errors.referral?.message}
         />
         <Field
-          label="E-mail da carteira"
+          label="E-mail"
           type="email"
           required
           {...form.register('email', {
@@ -450,6 +464,8 @@ function WalletEditor({
           error={errors.email?.message}
         />
         <Field
+          ens
+          value={form.watch('ens')}
           label="Nome ENS"
           required
           {...form.register('ens', {
@@ -459,10 +475,6 @@ function WalletEditor({
           error={errors.ens?.message}
         />
       </div>
-      <label className="inline">
-        <input type="checkbox" {...form.register('primary')} />
-        Usar como carteira principal
-      </label>
       {save.isError && (
         <p role="alert" className="field-error">
           {errorMessage(save.error)}

@@ -47,15 +47,15 @@ test('compra operável pelo teclado, do detalhe ao recibo', async ({ page }) => 
   }
   await page.goto('/nft/nft-1')
   await activate(page.getByRole('button', { name: /^(COMPRAR|Comprar NFT)$/ }))
-  await activate(page.getByRole('link', { name: 'Conectar e finalizar', exact: true }))
+  await activate(page.getByRole('button', { name: 'Conectar e finalizar', exact: true }))
   await page.getByLabel('E-mail', { exact: true }).focus()
   await page.keyboard.type('alice@example.test')
   await page.getByLabel('Senha', { exact: true }).focus()
   await page.keyboard.type('Colecionador123!')
   await activate(page.getByRole('button', { name: 'Entrar', exact: true }))
   await activate(page.getByRole('button', { name: 'Conectar carteira', exact: true }))
-  await activate(page.getByRole('button', { name: 'Autorizar conexão simulada' }))
-  await activate(page.getByRole('button', { name: 'Revisar compra', exact: true }))
+  await activate(page.getByRole('button', { name: 'Autorizar conexão' }))
+  await activate(page.getByRole('button', { name: 'Confirmar compra', exact: true }))
   await activate(page.getByRole('button', { name: 'Confirmar compra', exact: true }))
   await expect(
     page.getByRole('heading', { name: 'Seus NFTs agora estão na sua carteira' }),
@@ -151,7 +151,7 @@ test('taxa alterada exige nova confirmação, cupom expirado e estoque bloqueiam
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
   const review = page.getByRole('dialog', { name: 'Revise sua compra' })
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(review.getByTestId('quote-total')).toHaveText('1.1925 ETH')
   await request(page, 'PATCH', '/demo', { networkFee: '0.01' })
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
@@ -159,7 +159,7 @@ test('taxa alterada exige nova confirmação, cupom expirado e estoque bloqueiam
   expect((await request(page, 'GET', '/orders')).data).toHaveLength(0)
   await page.keyboard.press('Escape')
   await request(page, 'PUT', '/cart/coupon', { coupon: 'KURIO10' })
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(review).toBeVisible()
   await request(page, 'PATCH', '/demo', { couponExpired: true })
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
@@ -169,7 +169,7 @@ test('taxa alterada exige nova confirmação, cupom expirado e estoque bloqueiam
   await request(page, 'DELETE', '/cart/coupon')
   await page.reload()
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(review).toBeVisible()
   await request(page, 'POST', '/demo/nft', { id: 'nft-1', stock: 0 })
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
@@ -181,10 +181,11 @@ test('taxa alterada exige nova confirmação, cupom expirado e estoque bloqueiam
 
 test('carteira pode recusar e desconectar; sessão expirada preserva rascunho do checkout', async ({
   page,
+  isMobile,
 }) => {
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
-  const review = page.getByRole('button', { name: 'Revisar compra', exact: true })
+  const review = page.getByRole('button', { name: 'Confirmar compra', exact: true })
   await page.getByRole('button', { name: 'Conectar carteira', exact: true }).click()
   await page.getByRole('button', { name: 'Recusar conexão', exact: true }).click()
   await expect(page.locator('.toast')).toContainText('Conexão recusada')
@@ -193,8 +194,10 @@ test('carteira pode recusar e desconectar; sessão expirada preserva rascunho do
   await page.getByRole('button', { name: 'Desconectar carteira', exact: true }).click()
   await expect(review).toBeDisabled()
   await connectWallet(page)
-  const editCollector = page.getByRole('button', { name: 'Dados do colecionador', exact: true })
-  if (await editCollector.isVisible()) await editCollector.click()
+  if (isMobile) {
+    await review.click()
+    await page.getByRole('button', { name: 'Editar dados', exact: true }).click()
+  }
   await page
     .getByLabel('Observação do colecionador (opcional)', { exact: true })
     .fill('Preservar meu contexto')
@@ -266,7 +269,7 @@ test('nove telas sem overflow em 390, 768, 1440 e texto ampliado', async ({ page
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(
     page.getByRole('heading', { name: 'Seus NFTs agora estão na sua carteira' }),
@@ -296,8 +299,16 @@ test('nove telas sem overflow em 390, 768, 1440 e texto ampliado', async ({ page
   await page.setViewportSize({ width: 768, height: 1000 })
   await page.goto('/perfil')
   await expect(page.getByLabel('Nome de exibição', { exact: true })).toBeVisible()
-  await page.addStyleTag({ content: 'html {font-size:200% !important}' })
-  await expect(page.getByRole('button', { name: 'Salvar perfil', exact: true })).toBeVisible()
+  // Browser zoom halves the effective CSS viewport and doubles physical pixel density.
+  const zoom = await page.context().newCDPSession(page)
+  await zoom.send('Emulation.setDeviceMetricsOverride', {
+    width: 384,
+    height: 500,
+    deviceScaleFactor: 2,
+    mobile: false,
+  })
+  expect(await page.evaluate(() => devicePixelRatio)).toBe(2)
+  await expect(page.getByRole('button', { name: 'Salvar', exact: true })).toBeVisible()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(
     true,
   )

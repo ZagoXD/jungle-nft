@@ -15,6 +15,7 @@ export const art = [
   '/images/artwork/9df2ff42dd27ba657621c304557d1a855a4be6a5.png',
   '/images/artwork/87580f2def9af0ce13f4b6f6ce17bb2449bcfc16.png',
 ]
+export const tokenId = (name: string) => (name.match(/#(\d+)/)?.[1] ?? '').padStart(4, '0')
 export function Icon({ name }: { name: 'search' | 'cart' | 'login' | 'heart' | 'arrow' }) {
   const paths = {
     search: 'search-icon-2.svg',
@@ -33,10 +34,19 @@ export function Layout({ children }: { children: ReactNode }) {
     [searchOpen, setSearchOpen] = useState(false),
     [search, setSearch] = useState('')
   const navigate = useNavigate()
+  const mobileTab =
+    location.pathname === '/favoritos'
+      ? 'favorites'
+      : ['/perfil', '/carteiras', '/pedidos'].includes(location.pathname)
+        ? 'profile'
+        : location.pathname === '/carrinho'
+          ? 'cart'
+          : 'home'
   const nav = (
     <>
       <Link
         to="/"
+        className={['/perfil', '/carteiras'].includes(location.pathname) ? 'active' : ''}
         activeProps={{ className: 'active' }}
         activeOptions={{ exact: true, includeHash: true, includeSearch: false }}
       >
@@ -55,10 +65,18 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         Mercado
       </Link>
-      <button onClick={() => notice('Conteúdo de criadores fora do escopo desta demonstração.')}>
+      <button
+        onClick={() =>
+          notice(
+            'Estamos preparando este espaço para os criadores. Ele estará disponível em breve.',
+          )
+        }
+      >
         Criadores
       </button>
-      <button onClick={() => notice('Conteúdo educativo fora do escopo desta demonstração.')}>
+      <button
+        onClick={() => notice('Estamos preparando novos conteúdos para você. Volte em breve.')}
+      >
         Aprenda
       </button>
     </>
@@ -68,7 +86,9 @@ export function Layout({ children }: { children: ReactNode }) {
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
-      <header className="site-header container">
+      <header
+        className={`site-header container ${location.pathname.startsWith('/pedido/') ? 'receipt-chrome' : ''}`}
+      >
         <Link to="/" aria-label="Kurio, início">
           <img
             src="/images/vectors/logo-1.svg"
@@ -124,7 +144,9 @@ export function Layout({ children }: { children: ReactNode }) {
           </Button>
         </div>
       </header>
-      <div className="mobile-page-header container">
+      <div
+        className={`mobile-page-header container ${location.pathname.startsWith('/pedido/') ? 'receipt-chrome' : ''}`}
+      >
         {location.pathname !== '/' && (
           <>
             <Link to="/" aria-label="Voltar ao início">
@@ -176,13 +198,20 @@ export function Layout({ children }: { children: ReactNode }) {
       <main id="conteudo" className="container" tabIndex={-1}>
         {children}
       </main>
-      <Footer />
+      {!['/perfil', '/carteiras'].includes(location.pathname) &&
+        !location.pathname.startsWith('/pedido/') && (
+          <Footer purchase={['/carrinho', '/pagamento'].includes(location.pathname)} />
+        )}
       {['/', '/perfil', '/favoritos', '/pedidos', '/carteiras'].includes(location.pathname) && (
         <nav className="bottom-nav" aria-label="Navegação mobile">
-          <Link to="/" aria-label="Início">
+          <Link to="/" aria-label="Início" aria-current={mobileTab === 'home' ? 'page' : undefined}>
             <img src="/images/vectors/iconly-bold-home-156.svg" alt="" width="20" height="20" />
           </Link>
-          <Link to="/favoritos" aria-label="Favoritos">
+          <Link
+            to="/favoritos"
+            aria-label="Favoritos"
+            aria-current={mobileTab === 'favorites' ? 'page' : undefined}
+          >
             <img src="/images/vectors/browser-vector-15-5527.svg" alt="" width="20" height="18" />
           </Link>
           <Button
@@ -193,10 +222,18 @@ export function Layout({ children }: { children: ReactNode }) {
           >
             <img src="/images/vectors/browser-group-15-5529.svg" alt="" width="27" height="24" />
           </Button>
-          <Link to="/carrinho" aria-label="Carrinho">
+          <Link
+            to="/carrinho"
+            aria-label="Carrinho"
+            aria-current={mobileTab === 'cart' ? 'page' : undefined}
+          >
             <img src="/images/vectors/browser-vector-15-5525.svg" alt="" width="18" height="17" />
           </Link>
-          <Link to="/perfil" aria-label="Perfil">
+          <Link
+            to="/perfil"
+            aria-label="Perfil"
+            aria-current={mobileTab === 'profile' ? 'page' : undefined}
+          >
             <img src="/images/vectors/browser-vector-15-5523.svg" alt="" width="14" height="17" />
           </Link>
         </nav>
@@ -212,11 +249,12 @@ export function Layout({ children }: { children: ReactNode }) {
     </>
   )
 }
-function Footer() {
+function Footer({ purchase = false }: { purchase?: boolean }) {
   const { notice } = useSession()
-  const outside = () => notice('Esta seção editorial não está disponível na demonstração.')
+  const outside = () =>
+    notice('Ainda estamos trabalhando nesta página. Ela estará disponível em breve.')
   return (
-    <footer className="site-footer container">
+    <footer className="site-footer container" data-purchase={purchase}>
       <section className="footer-benefits">
         <div>
           <span className="benefit-icon">W</span>
@@ -232,7 +270,7 @@ function Footer() {
           <span className="benefit-icon">D</span>
           <h3>Alertas de lançamentos</h3>
           <p>
-            Receba calendários de cunhagem, novidades de listas de acesso e análises de mercado.
+            Receba calendários de cunhagem, novidades de listas de acesso e análises do mercado.
           </p>
         </div>
         <div>
@@ -240,13 +278,13 @@ function Footer() {
           <form
             onSubmit={(event) => {
               event.preventDefault()
-              notice('Inscrição de newsletter fora do escopo desta demonstração.')
+              notice('Estamos preparando os alertas por e-mail. Em breve você poderá se inscrever.')
             }}
           >
             <label className="sr-only" htmlFor="newsletter">
               Seu e-mail
             </label>
-            <div className="inline">
+            <div className="inline newsletter-input">
               <input id="newsletter" type="email" required placeholder="digite seu e-mail..." />
               <Button size="sm">Enviar</Button>
             </div>
@@ -260,16 +298,17 @@ function Footer() {
           Feito para colecionadores,
           <br /> criadores e cultura
         </p>
-        <a href="mailto:contato@example.test">contato@example.test</a>
+        <a href="mailto:contato@email.com">contato@email.com</a>
         <span>+55 11 4002 8922</span>
       </div>
       <div className="footer-links">
         <div>
           <h3>Meu perfil</h3>
           <Link to="/perfil">Meu perfil</Link>
-          <Link to="/favoritos">Minha coleção</Link>
-          <Link to="/pedidos">Meus pedidos</Link>
-          <Link to="/carteiras">Minhas carteiras</Link>
+          <Link to="/pedidos">Minha coleção</Link>
+          <Link to="/pedidos">Atividade</Link>
+          <button onClick={outside}>Estúdio do criador</button>
+          <Link to="/favoritos">Lista de interesse</Link>
         </div>
         <div>
           <h3>Central de ajuda</h3>
@@ -277,7 +316,7 @@ function Footer() {
             'Central de ajuda',
             'Como comprar NFTs',
             'Carteira e segurança',
-            'Política de mercado',
+            'Política do mercado',
             'Denunciar item',
           ].map((text) => (
             <button key={text} onClick={outside}>
@@ -287,7 +326,7 @@ function Footer() {
         </div>
         <div>
           <h3>Coleções</h3>
-          {['Arte digital', 'Fotografia', 'Colecionáveis'].map((category) => (
+          {['Arte digital', 'Fotografia', 'Música', 'Arte 3D', 'Utilidade'].map((category) => (
             <Link key={category} to="/" search={{ category }} hash="catalogo">
               {category}
             </Link>
@@ -313,17 +352,9 @@ function Footer() {
             ))}
           </div>
           <h3>Carteiras compatíveis</h3>
-          <small>METAMASK · WALLETCONNECT · COINBASE</small>
-          <p className="muted">Conexões simuladas nesta demonstração.</p>
+          <small className="wallet-badge">METAMASK · WALLETCONNECT · COINBASE</small>
         </div>
       </div>
-      <p className="copyright">
-        © 2026 Kurio. Propriedade digital para todos.
-        <br />
-        <Link to="/demonstracao" className="demo-link">
-          Cenários da demonstração
-        </Link>
-      </p>
     </footer>
   )
 }
@@ -371,16 +402,26 @@ export function PageHeading({
   title,
   subtitle,
   compact = false,
+  market = false,
 }: {
   title: string
   subtitle?: string
   compact?: boolean
+  market?: boolean
 }) {
   return (
     <div className={`page-heading ${compact ? 'page-heading-compact' : ''}`}>
       <nav aria-label="Navegação estrutural">
         <Link to="/">Início</Link>
         <span aria-hidden="true"> / </span>
+        {market && (
+          <>
+            <Link to="/" hash="catalogo">
+              Mercado
+            </Link>
+            <span aria-hidden="true"> / </span>
+          </>
+        )}
         <span>{title}</span>
       </nav>
       <h1 className={compact ? 'sr-only' : undefined}>{title}</h1>
@@ -446,7 +487,9 @@ export function FavoriteButton({ nft, showLabel = false }: { nft: Nft; showLabel
         mutation.mutate(active)
       }}
     >
-      <Icon name="heart" />
+      <span className="favorite-icon" aria-hidden="true">
+        {active ? <img src="/images/vectors/heart-filled.svg" alt="" /> : <Icon name="heart" />}
+      </span>
       {showLabel && <span>{active ? 'Favoritado' : 'Favoritar'}</span>}
     </Button>
   )
@@ -474,12 +517,18 @@ export function NftCard({
             fetchPriority={priority ? 'high' : 'auto'}
           />
         </Link>
+        {nft.rarity && <span className="nft-rarity">{nft.rarity}</span>}
         {favorite && <FavoriteButton nft={nft} />}
       </div>
       <Link to="/nft/$id" params={{ id: nft.id }} className="nft-name">
         {nft.name}
       </Link>
-      <p className="price">{formatEth(nft.price)} ETH</p>
+      <p className="price">
+        {formatEth(nft.price)} ETH
+        {nft.compareAtPrice && (
+          <span className="compare-price">{formatEth(nft.compareAtPrice)} ETH</span>
+        )}
+      </p>
     </article>
   )
 }

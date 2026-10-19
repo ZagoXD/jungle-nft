@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-19T22:08:16.180308+00:00",
+  "baseCommit": "e353a2027cf7e55c4902f31823840c8a5d4c565d",
+  "noCommitOrPushThisRevision": true,
+  "figmaFrames": [
+    "70342:2770",
+    "70493:1151",
+    "2:2",
+    "70522:3321",
+    "70376:239"
+  ],
+  "designEvidence": "Original exported frames, saved metadata and the user-provided annotated screenshots. Detailed MCP context was refused for lack of editor access.",
+  "manualReferenceReview": [
+    "catalogue and promotions",
+    "NFT details and editions",
+    "footer",
+    "cart",
+    "checkout",
+    "order confirmation",
+    "login and signup",
+    "profile",
+    "wallets"
+  ],
+  "corrected": [
+    "Filled favorite heart derived from original contour",
+    "Edition pills without native radio circles",
+    "Exact contract/copyright copy in requested order",
+    "Footer links, contact, separators, newsletter join and wallet badge",
+    "Removed product footer scenario link and mock-only copy",
+    "Text-only category and network choices, including Solana",
+    "Selected catalogue tabs and promotion alignment",
+    "Shared ENS domain/name control with canonical API string",
+    "Checkout labels, secondary-address placeholder, columns and note dimensions",
+    "Collapsed promotional code with API validation",
+    "Estimated network fee label and provider rows",
+    "Single profile Save and validated optional password change",
+    "Primary/secondary wallet fields, copy action and duplicate validation",
+    "Standalone confirmation card with immutable order snapshot",
+    "Automatic toast dismissal, interaction pause and dismissal above modals",
+    "Active Home navigation in account pages",
+    "Product-style availability notices for unfinished integrations",
+    "Removed additional footer copyright copy absent from the supplied reference"
+  ],
+  "e2e": {
+    "expected": 67,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "total": 68,
+    "ok": true
+  },
+  "visualRegression": {
+    "baselines": 10,
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ],
+    "referenceComparison": "manual; regression compares the reviewed current app baselines"
+  },
+  "productionSmoke": {
+    "purchases": 2,
+    "screenshots": 20,
+    "runtimeErrors": 0
+  },
+  "functionalDesignExtensions": [
+    "Review before sending is required by the challenge README; no separate review frame was found among the available layouts.",
+    "Connection/refusal/disconnection controls remain available as required by the README.",
+    "Pre-filled account data, item quantities, totals and receipt height follow actual API state.",
+    "Facet counts reflect the 36 API fixtures; the static design counts are not substituted for real filtered results.",
+    "Transaction explorer is a local test record; no blockchain or real payment integration is performed.",
+    "Mobile collector editor, purchase details and review remain accessible to satisfy the challenge README; real API wallet records determine displayed cards."
+  ],
+  "mobileReview": {
+    "viewports": [
+      "390x844",
+      "414x896",
+      "844x390 landscape login"
+    ],
+    "responsiveNineScreens": [
+      390,
+      768,
+      1440
+    ],
+    "referenceFrames": 6,
+    "additionalAdaptiveScreens": [
+      "profile",
+      "wallets",
+      "confirmation"
+    ],
+    "nativeTouchTests": 3,
+    "galleryGesture": "Chromium CDP touch gesture, then native tap; previous/next, favorite, edition and quantity validated",
+    "zoom": "200% equivalent reflow: 384x500 CSS viewport, deviceScaleFactor 2; profile content remains available",
+    "corrections": [
+      "All sort choices available in the mobile filter drawer, persisted in URL/history/refresh",
+      "Swipeable gallery, accessible previous/next and counter, zoom uses selected image",
+      "Mobile cart 100px thumbnails, quantities, full-width summary, coupon and no price overflow",
+      "Registered wallet cards, network picker and provider rows follow the mobile composition",
+      "Purchase details/coupon and collector editor expandable; validation and review retained",
+      "Mobile signup title/action, rarity badge and comparison price restored from design",
+      "Footer/related cards removed from populated mobile purchase screens; safe-area spacing preserved"
+    ],
+    "productionScreenshots": 18,
+    "mobileProductionViewport": "414x896",
+    "manualComparison": "Original local Figma exports; live detailed MCP access refused. No automated pixel-equality claim."
+  },
+  "checkoutFollowUp": "checkout-corrections.json"
+}

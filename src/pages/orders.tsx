@@ -6,7 +6,14 @@ import type { Catalog, Order } from '../domain/contracts'
 import { api } from '../lib/api'
 import { usePrivateQuery, useSession } from '../lib/state'
 import { formatEth } from '../domain/money'
-import { EmptyState, ErrorState, NftCard, PageHeading, Skeleton } from '../components/shared'
+import {
+  tokenId,
+  EmptyState,
+  ErrorState,
+  NftCard,
+  PageHeading,
+  Skeleton,
+} from '../components/shared'
 import { Button } from '../components/ui/button'
 import { QuoteSummary } from './cart'
 import { AccountLayout } from './account'
@@ -36,7 +43,7 @@ export function OrderPage() {
         <PageHeading title="Pedido em processamento" />
         <div className="state-box">
           <h2>Aguardando confirmação</h2>
-          <p>Pedido {value.id}. A simulação está processando seu pagamento.</p>
+          <p>Pedido {value.id}. Estamos processando seu pagamento.</p>
           <p>Você pode recarregar esta página ou voltar depois. Não será criado outro pedido.</p>
           <Skeleton type="summary" />
           <Button variant="outline" onClick={() => void order.refetch()}>
@@ -60,15 +67,21 @@ export function OrderPage() {
     )
   return (
     <article className="receipt">
+      <Link className="receipt-close" to="/" aria-label="Fechar confirmação">
+        ×
+      </Link>
       <div className="receipt-heading">
         <img src="/images/vectors/thank-you-1-88.svg" alt="" width="80" height="80" />
         <h1>Seus NFTs agora estão na sua carteira</h1>
-        <p>Compra confirmada na simulação</p>
       </div>
       <dl className="receipt-meta">
         <div>
-          <dt>ID do pedido</dt>
-          <dd>{value.id}</dd>
+          <dt>ID da transação</dt>
+          <dd title={value.transaction ?? value.id}>
+            {value.transaction
+              ? `${value.transaction.slice(0, 6)}…${value.transaction.slice(-4)}`
+              : value.id}
+          </dd>
         </div>
         <div>
           <dt>Data</dt>
@@ -85,6 +98,11 @@ export function OrderPage() {
       </dl>
       <div className="receipt-body">
         <h2>Detalhes da transação</h2>
+        <div className="receipt-items-heading">
+          <span>NFTs</span>
+          <span>Edições</span>
+          <span>Subtotal</span>
+        </div>
         <div className="receipt-items">
           {value.quote.lines.map((line) => (
             <article key={`${line.nftId}:${line.editionId}`}>
@@ -97,32 +115,23 @@ export function OrderPage() {
               />
               <div>
                 <h3>{line.name}</h3>
-                <p>
-                  {line.edition} × {line.quantity}
-                </p>
+                <p>ID do token: #{tokenId(line.name)}</p>
               </div>
+              <span className="receipt-quantity">(× {line.quantity})</span>
               <strong className="price">{formatEth(line.total)} ETH</strong>
             </article>
           ))}
         </div>
-        <QuoteSummary quote={value.quote} />
+        <QuoteSummary quote={value.quote} receipt />
         <p className="receipt-message">
-          Transação confirmada na {value.wallet.network}, em ambiente demonstrativo. Nenhum ativo ou
-          valor real foi transferido.
-        </p>
-        <p className="transaction-id" id="transacao">
-          <strong>Transação simulada:</strong>
-          <br />
-          {value.transaction}
+          Transação confirmada na {value.wallet.network} de testes. A propriedade foi transferida
+          para sua carteira conectada e registrada na rede de testes.
         </p>
         <Button asChild>
           <Link to="/explorador/$id" params={{ id: value.id }}>
-            Ver no explorador simulado
+            Ver no Etherscan
           </Link>
         </Button>
-        <Link className="continue-link" to="/">
-          Continuar explorando
-        </Link>
       </div>
     </article>
   )
@@ -137,8 +146,8 @@ export function ExplorerPage() {
   return (
     <>
       <PageHeading
-        title="Explorador simulado"
-        subtitle="Esta transação existe apenas nesta demonstração local."
+        title="Detalhes da transação"
+        subtitle="Registro em ambiente local de testes. Nenhum ativo real foi transferido."
       />
       {order.isPending ? (
         <Skeleton type="summary" />

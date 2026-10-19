@@ -1,31 +1,23 @@
-# Validação da entrega local
+# Validação da revisão local
 
-A suíte Chromium contém 48 casos: **47 aprovados, zero falhas, zero instáveis e uma repetição dispensada**. A verificação responsiva já percorre as nove telas em 390, 768 e 1440 no projeto desktop; por isso não se repete no projeto mobile. A execução final usou dois workers e contextos isolados. Os fluxos também passaram na execução com um worker antes da última verificação de isolamento.
+A suíte Chromium atual contém **68 casos: 67 aprovados, zero falhas, zero instáveis e uma repetição dispensada**. A verificação responsiva já percorre as nove telas em 390, 768 e 1440 no projeto desktop; por isso não se repete no mobile. Execução com dois workers e contextos isolados, sem atualizar snapshots na suíte final.
 
 - [Relatório Playwright](playwright/index.html): `npx playwright show-report reports/playwright`.
-- [Resumo E2E](e2e-summary.json), [validação geral](validation.json) e [smoke do build de produção](production-smoke.json).
-- [Verificação do detector visual](visual-detector.json): deslocamento temporário de 40 px no hero produziu 2,48% de pixels diferentes, acima da tolerância de 0,3%; ao restaurar, a comparação voltou a zero. O fonte foi preservado.
-- [Assets otimizados](assets.json) e [auditoria de dependências](dependencies.json): zero vulnerabilidades.
+- [Resumo E2E](e2e-summary.json), [validação](validation.json) e [smoke do build](production-smoke.json).
+- [Correções do checkout](checkout-corrections.json): modal no carrinho, estados de carteiras e ajustes visuais solicitados.
+- [Revisão de fidelidade e mobile](fidelity-corrections.json) e [auditoria anterior dos 157 blocos do README](requirements-audit.json), com a referência desta correção complementar.
+- [Assets](assets.json), [dependências](dependencies.json) e [experimento anterior do detector visual](visual-detector.json) preservados.
 
-As oito baselines de início, detalhe, carrinho e pagamento ficam em `tests/visual.spec.ts-snapshots/`, para desktop e mobile. Foram revisadas contra os frames exportados do Figma. Capturas esperam fontes, imagens e estabilização do layout. Falhas futuras mantêm screenshot e trace em `test-results/`; a execução final aprovada não gerou traces de falha para conservar.
+Três novos cenários executam nos dois perfis e cobrem login/cadastro sem sair do carrinho, cancelamento e foco, sessão já ativa, mesclagem dos itens, conta sem carteiras, falha da API com retry, carregamento lento, refresh, botão Salvar carteira sem quebra, centralização da taxa e largura da linha do recibo. O helper da suíte verifica erros de runtime. O build concluiu duas compras sem erros e gerou vinte capturas fora do app, incluindo o modal sobre o carrinho em desktop e mobile.
 
-## Lighthouse
+As dez baselines são oito telas completas (início, detalhe, carrinho e pagamento nos dois perfis) e dois recortes das edições, com tolerância menor para proteger sua borda elíptica. Foram revistas manualmente e passaram na suíte completa sem atualização. Comparação com o Figma é manual, usando os exports originais e as referências enviadas; os testes visuais comparam a aplicação às suas baselines.
 
-Três medições por página e perfil no **mesmo build otimizado**, com navegador limpo em cada medição. Configuração reproduzível: `scripts/lighthouse.mjs`; comando `npm run build` seguido de `npm run lighthouse`. O servidor de preview local foi usado em 127.0.0.1:4173. Cenário padrão MSW com 80 ms de latência REST; assets e funcionalidades completos. Mobile usa a simulação padrão Lighthouse, sem aliviar rede/CPU; desktop usa o preset oficial, 1440 × 1000. Não houve execução E2E concorrente durante as auditorias.
+## Lighthouse e publicação
 
-| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| inicio | mobile | 89 | 100 | 100 | 100 | 3.613 s | 0.000291 | 89 ms |
-| inicio | desktop | 100 | 98 | 100 | 100 | 0.749 s | 0.000274 | 0 ms |
-| detalhe | mobile | 89 | 99 | 100 | 100 | 3.595 s | 0.000097 | 94 ms |
-| detalhe | desktop | 99 | 100 | 100 | 100 | 0.893 s | 0.000256 | 0 ms |
+A última auditoria completa de Lighthouse está em [summary.json](lighthouse/summary.json), com data, doze relatórios HTML/JSON, versões, condições e medianas. **Ela foi executada antes desta correção pontual de checkout e não foi repetida nesta rodada.** O fingerprint correspondente está em `validation.json → lighthouseAudit`. Os resultados preservados foram: inicial P89 mobile/P100 desktop, detalhe P90 mobile/P99 desktop; Accessibility 98–100, Best Practices 100 e SEO 100. A inicial mobile ficou abaixo da meta 90; a ressalva e o custo de inicialização de aplicação/MSW e carregamento da arte permanecem documentados. Não se declara nova medição de performance para este build.
 
-Medianas calculadas automaticamente em [summary.json](lighthouse/summary.json), que contém cada medição, versões de Node, Chromium, Lighthouse e Playwright, CPU, sistema operacional e condições. Os relatórios individuais `.html` e `.json` estão em `lighthouse/`, com nomes `inicio|detalhe-mobile|desktop-1|2|3`.
+O deploy e o smoke da URL pública continuam delegados ao usuário. A base Git segue `e353a20` (`app v1`); **nenhum commit ou push foi feito nesta revisão**. Os relatórios funcionais anteriores nos mesmos caminhos foram substituídos pelos resultados atuais.
 
-**Ressalva: performance mobile 89 nas duas páginas, abaixo da meta 90.** As outras categorias atingem as metas de 95/95/90; performance desktop também supera 90. O principal custo remanescente é a inicialização cliente antes de exibir a arte dependente da API: React, Router/Query e o serviço MSW completo precisam carregar e executar sob CPU/rede mobile simuladas. O LCP mediano é próximo de 3,6 s. A contribuição de deslocamento de layout é pequena; TBT mediano fica abaixo de 100 ms.
+## Ajustes dos painéis mobile
 
-Foram aplicados imports paralelos, carregamento de rotas sob demanda, bundle ESM compacto oficial de `tldts` sem remover dados de cookies, WebP responsivo, dimensões reservadas e feedback inicial com skeletons. O bundle de MSW passou de aproximadamente 451 KB para 315 KB brutos; as 12 variantes de imagem somam 472.126 bytes. Os PNG originais continuam disponíveis para ampliação. Não foram removidos mocks, Socket.IO, imagens ou fontes para auditar, nem adicionadas ramificações exclusivas para Lighthouse. A meta mobile permanece registrada como não atingida, em vez de atribuir ao deploy ainda não realizado uma pontuação não medida.
-
-## Publicação e Git
-
-A publicação foi delegada ao usuário. `vercel.json` e instruções de deploy estão prontos, mas não houve validação de URL pública. Os arquivos da aplicação, lockfile, relatórios e baselines estão na árvore de trabalho; não houve commit ou push da implementação, conforme solicitado.
+Nome de usuário alinhado à esquerda. Navegação com cor e aria-current da aba ativa. Compra do NFT, resumo do carrinho e confirmação do pagamento fixos no rodapé, com sombra, safe area e espaço reservado dinamicamente no conteúdo. Os atalhos Detalhes da compra e Dados do colecionador foram retirados da tela principal; editar dados e aplicar cupom continuam disponíveis na revisão. Novo teste mobile cobre abas, alinhamento, scroll e painéis em 390 × 844 e 414 × 640.

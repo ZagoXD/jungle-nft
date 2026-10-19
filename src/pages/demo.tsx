@@ -52,7 +52,7 @@ export function DemoPage() {
       method?: string
     }) => (await api.request({ method, url: path, data })).data,
     onSuccess: async () => {
-      notice('Condição da demonstração atualizada.')
+      notice('Condição de teste atualizada.')
       await client.invalidateQueries()
     },
     onError: (error) => notice(errorMessage(error)),
@@ -60,7 +60,7 @@ export function DemoPage() {
   return (
     <>
       <PageHeading
-        title="Cenários da demonstração"
+        title="Cenários de teste"
         subtitle="Controle a simulação pela rede e reproduza as condições de avaliação."
       />
       <div className="demo-grid">
@@ -141,7 +141,7 @@ export function DemoPage() {
           >
             Resolver pedidos pendentes
           </Button>
-          <h2>Restaurar demonstração</h2>
+          <h2>Restaurar dados de teste</h2>
           <p>
             Restaura catálogo, contas fictícias, carrinhos, favoritos, carteiras e pedidos. Use para
             iniciar uma avaliação independente.

@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-19T22:08:16.180308+00:00",
+  "sourceTreeSha256": "c41fd79124d473f8abae8a3f03d30d7034559f907cdce58f030a5a62bdda5c62",
+  "sourceFiles": 201,
+  "baseCommit": "e353a2027cf7e55c4902f31823840c8a5d4c565d",
+  "newCommit": false,
+  "push": false,
+  "expectedCartBehavior": {
+    "anonymous": "Conectar e finalizar opens login/signup in a modal over /carrinho; closing preserves URL, items and returns focus.",
+    "authenticated": "Finalizar navigates directly to /pagamento.",
+    "afterAuthentication": "Login/signup merges the visitor cart through the API and navigates to /pagamento."
+  },
+  "corrected": [
+    "All checkout wallet list operations use a normalized collection before the query has data, including closed-dialog expressions.",
+    "Loading, empty wallets, HTTP error, retry and refresh remain distinct and operable without a route exception.",
+    "Shared authentication form reused in the cart modal, loaded on demand, without replacing its background with the catalogue.",
+    "Salvar carteira remains on one line.",
+    "Edition borders use an ellipse rather than a capsule; two focused visual baselines protect their shape.",
+    "Taxa estimada is centered across the entire quote summary.",
+    "The receipt separator below network fee/total spans the same width as its transaction-detail heading."
+  ],
+  "tests": {
+    "file": "tests/checkout-entry.spec.ts",
+    "newCases": 7,
+    "profiles": [
+      "Chromium desktop 1440x1000",
+      "Chromium mobile 390x844"
+    ],
+    "coverage": [
+      "modal cancellation/focus",
+      "login and direct checkout by authenticated users",
+      "signup without wallets",
+      "visitor cart preservation",
+      "slow loading and refresh",
+      "wallet API failure/retry",
+      "single-line save",
+      "centered fee text",
+      "receipt separator geometry"
+    ],
+    "fullSuite": {
+      "expected": 67,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 1,
+      "total": 68,
+      "ok": true
+    },
+    "visualBaselines": 10,
+    "snapshotUpdateDuringFinalSuite": false,
+    "runtimeErrors": 0
+  },
+  "production": {
+    "purchases": 2,
+    "screenshots": 20,
+    "runtimeErrors": 0,
+    "cartLoginBackgroundVerified": true
+  },
+  "lighthouseAudit": {
+    "rerunThisFollowUp": false,
+    "sourceTreeSha256": "a157e2bc7f37400db7aa656f168ecdefed495b484eaf076d19a6ad48e27eca53",
+    "date": "2026-10-19T21:39:34.216Z",
+    "report": "lighthouse/summary.json",
+    "note": "Previous complete Lighthouse audit preserved and explicitly dated; not presented as a fresh measurement of this checkout correction."
+  },
+  "mobileDocksFollowUp": {
+    "usernameAlignment": "left, as explicitly requested",
+    "navigation": "aria-current and active icon color follow Home/Favorites/Profile; account subpages belong to Profile",
+    "fixedPanels": [
+      "NFT buy controls",
+      "cart summary",
+      "checkout total and confirmation"
+    ],
+    "contentProtection": "ResizeObserver reserves panel height; panels have internal overflow, safe-area padding and upper shadow; dialogs remain above them",
+    "checkout": "No Details/Collector shortcuts on main mobile payment screen; Edit data and coupon are available in the review",
+    "test": "mobile-review.spec.ts: active tab, alignment and fixed panels at 390x844 and 414x640, after scrolling",
+    "manualReview": "Current production viewport screenshots for mobile NFT detail, cart and payment",
+    "draftPersistence": "React Hook Form values subscription persists updated draft values; six repeated expiration/resume checks passed (three per profile)"
+  },
+  "serviceWorker": "Generated MSW worker unchanged. Direct navigation and refresh validated with the local server running."
+}

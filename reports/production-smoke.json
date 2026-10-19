@@ -14,7 +14,7 @@
     },
     {
       "viewport": "mobile",
-      "width": 390,
+      "width": 414,
       "login": true,
       "signup": true,
       "profile": true,

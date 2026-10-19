@@ -1,12 +1,13 @@
+import { useMobileDock } from '../lib/mobileDock'
 import { responsiveImage } from '../lib/images'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { Collector, Network, Order, OrderInput, Quote } from '../domain/contracts'
 import { api, errorMessage, fieldErrors, statusOf } from '../lib/api'
 import { useCart, useQuote, useSession, useWallets } from '../lib/state'
-import { EmptyState, ErrorState, PageHeading, Skeleton } from '../components/shared'
+import { tokenId, EmptyState, ErrorState, PageHeading, Skeleton } from '../components/shared'
 import { Button } from '../components/ui/button'
 import { Dialog } from '../components/ui/dialog'
 import { Field } from '../components/forms'
@@ -46,11 +47,14 @@ export function CheckoutPage() {
   const [walletId, setWalletId] = useState(''),
     [collectorOpen, setCollectorOpen] = useState(false),
     [connectedWallet, setConnectedWallet] = useState(''),
-    [connectOpen, setConnectOpen] = useState(false)
+    [connectOpen, setConnectOpen] = useState(false),
+    [walletPickerOpen, setWalletPickerOpen] = useState(false)
+  const { ref: dockRef, isMobile } = useMobileDock(!collectorOpen)
+  const registeredWallets = wallets.data ?? []
   const wallet =
-    wallets.data?.find((wallet) => wallet.id === walletId) ??
-    wallets.data?.find((wallet) => wallet.primary && wallet.network === network) ??
-    wallets.data?.find((wallet) => wallet.network === network)
+    registeredWallets.find((wallet) => wallet.id === walletId && wallet.network === network) ??
+    registeredWallets.find((wallet) => wallet.primary && wallet.network === network) ??
+    registeredWallets.find((wallet) => wallet.network === network)
   const [review, setReview] = useState<Quote | null>(null),
     [reviewData, setReviewData] = useState<Collector | null>(null),
     [reviewChanged, setReviewChanged] = useState(false)
@@ -74,6 +78,16 @@ export function CheckoutPage() {
   const errors = form.formState.errors
   const saveDraft = () =>
     sessionStorage.setItem(`kurio.checkout:${userId}`, JSON.stringify(form.getValues()))
+  useEffect(
+    () =>
+      form.subscribe({
+        formState: { values: true },
+        callback: ({ values }) => {
+          sessionStorage.setItem(`kurio.checkout:${userId}`, JSON.stringify(values))
+        },
+      }),
+    [form, userId],
+  )
   const connection = useMutation({
     mutationFn: async (action: 'connect' | 'decline' | 'disconnect') =>
       (
@@ -85,7 +99,7 @@ export function CheckoutPage() {
     onSuccess: (result) => {
       setConnectedWallet(result.connected ? result.walletId : '')
       setConnectOpen(false)
-      notice(result.connected ? 'Carteira conectada na simulação.' : 'Carteira desconectada.')
+      notice(result.connected ? 'Carteira conectada.' : 'Carteira desconectada.')
     },
     onError: (error) => {
       setConnectedWallet('')
@@ -162,6 +176,45 @@ export function CheckoutPage() {
       void client.invalidateQueries({ queryKey: ['quote'] })
     }
   }
+  const costs = (
+    <div className="checkout-costs" data-expanded="false">
+      <h2>Seus NFTs</h2>
+      <div className="checkout-items-heading">
+        <span>NFTs</span>
+        <span>Subtotal</span>
+      </div>
+      {quote.isPending ? (
+        <Skeleton type="summary" />
+      ) : quote.isError ? (
+        <ErrorState error={quote.error} retry={() => void quote.refetch()} />
+      ) : (
+        <>
+          <div className="checkout-items">
+            {quote.data.lines.map((line) => (
+              <article key={`${line.nftId}:${line.editionId}`}>
+                <img
+                  {...responsiveImage(line.image, '70px')}
+                  src={line.image}
+                  alt={line.name}
+                  width="70"
+                  height="70"
+                />
+                <div>
+                  <strong>{line.name}</strong>
+                  <small>
+                    ID do token: #{tokenId(line.name)} (× {line.quantity})
+                  </small>
+                </div>
+                <strong className="price">{formatEth(line.total)} ETH</strong>
+              </article>
+            ))}
+          </div>
+          <CouponForm collapsed />
+          <QuoteSummary quote={quote.data} />
+        </>
+      )}
+    </div>
+  )
   if (attempt)
     return (
       <>
@@ -191,7 +244,7 @@ export function CheckoutPage() {
     )
   return (
     <>
-      <PageHeading title="Pagamento" compact />
+      <PageHeading title="Pagamento" compact market />
       {cart.isPending || wallets.isPending ? (
         <Skeleton type="detail" />
       ) : cart.isError || wallets.isError ? (
@@ -215,21 +268,10 @@ export function CheckoutPage() {
         <div className="checkout-layout">
           <section className="collector-section" data-expanded={collectorOpen}>
             <h1>Perfil do colecionador</h1>
-            <Button
-              type="button"
-              variant="outline"
-              className="collector-toggle full-width"
-              aria-expanded={collectorOpen}
-              aria-controls="collector-form"
-              onClick={() => setCollectorOpen(!collectorOpen)}
-            >
-              {collectorOpen ? 'Ocultar dados do colecionador' : 'Dados do colecionador'}
-            </Button>
             <form
               id="collector-form"
               className="stack"
               noValidate
-              onChange={saveDraft}
               onSubmit={(event) => {
                 if (wallet) form.setValue('walletAddress', wallet.address)
                 void form.handleSubmit(
@@ -283,6 +325,9 @@ export function CheckoutPage() {
                       setReview(null)
                     }}
                   >
+                    <option value="" disabled>
+                      Selecione uma rede
+                    </option>
                     <option>Ethereum</option>
                     <option>Polygon</option>
                   </select>
@@ -298,12 +343,15 @@ export function CheckoutPage() {
                 />
                 <Field
                   label="Endereço da carteira"
+                  placeholder="Endereço 0x da carteira"
                   required
                   readOnly
                   value={wallet?.address ?? ''}
                   aria-describedby="address-help"
                 />
                 <Field
+                  hiddenLabel
+                  placeholder="ENS ou carteira secundária (opcional)"
                   label="ENS ou carteira secundária (opcional)"
                   error={errors.secondaryAddress?.message}
                   {...form.register('secondaryAddress', {
@@ -319,6 +367,9 @@ export function CheckoutPage() {
                     Tipo de carteira <span className="required">*</span>
                   </label>
                   <select id="wallet-type" {...form.register('walletType')}>
+                    <option value="" disabled>
+                      Selecione uma carteira
+                    </option>
                     <option>MetaMask</option>
                     <option>WalletConnect</option>
                     <option>Coinbase Wallet</option>
@@ -348,6 +399,8 @@ export function CheckoutPage() {
                   })}
                 />
                 <Field
+                  ens
+                  value={form.watch('ens')}
                   label="Nome ENS"
                   required
                   error={errors.ens?.message}
@@ -360,13 +413,13 @@ export function CheckoutPage() {
                   })}
                 />
               </div>
-              <p className="muted" id="address-help">
+              <p className="sr-only" id="address-help">
                 O endereço é preenchido pela carteira cadastrada selecionada.
               </p>
               <Link className="text-button" to="/carteiras">
                 Usar outra carteira?
               </Link>
-              <div className="field">
+              <div className="field collector-note">
                 <label htmlFor="collector-note">Observação do colecionador (opcional)</label>
                 <textarea
                   id="collector-note"
@@ -375,73 +428,133 @@ export function CheckoutPage() {
                   {...form.register('note')}
                 />
               </div>
+              <Button
+                type="button"
+                className="collector-save"
+                onClick={async () => {
+                  if (await form.trigger()) {
+                    saveDraft()
+                    setCollectorOpen(false)
+                    requestAnimationFrame(() =>
+                      document
+                        .querySelector<HTMLButtonElement>('.review-button')
+                        ?.focus({ preventScroll: false }),
+                    )
+                  }
+                }}
+              >
+                Salvar dados
+              </Button>
             </form>
           </section>
           <aside className="checkout-summary">
-            <div className="checkout-costs">
-              <h2>Seus NFTs</h2>
-              {quote.isPending ? (
-                <Skeleton type="summary" />
-              ) : quote.isError ? (
-                <ErrorState error={quote.error} retry={() => void quote.refetch()} />
-              ) : (
-                <>
-                  <div className="checkout-items">
-                    {quote.data.lines.map((line) => (
-                      <article key={`${line.nftId}:${line.editionId}`}>
-                        <img
-                          {...responsiveImage(line.image, '70px')}
-                          src={line.image}
-                          alt={line.name}
-                          width="70"
-                          height="70"
-                        />
-                        <div>
-                          <strong>{line.name}</strong>
-                          <small>
-                            {line.edition} (× {line.quantity})
-                          </small>
-                        </div>
-                        <strong className="price">{formatEth(line.total)} ETH</strong>
-                      </article>
-                    ))}
-                  </div>
-                  <CouponForm />
-                  <QuoteSummary quote={quote.data} />
-                </>
-              )}
-            </div>
-            <div className="checkout-wallets">
-              <h2>Carteira e rede</h2>
-              {wallets.data.length ? (
-                <fieldset className="wallet-selector">
-                  <legend className="sr-only">Carteiras cadastradas</legend>
-                  {wallets.data
-                    .filter((value) => value.network === network)
-                    .map((value) => (
-                      <label className={wallet?.id === value.id ? 'selected' : ''} key={value.id}>
-                        <input
-                          type="radio"
-                          name="wallet"
-                          checked={wallet?.id === value.id}
-                          onChange={() => {
-                            setWalletId(value.id)
-                            setConnectedWallet('')
-                          }}
-                        />
-                        <span>
-                          <strong>{value.primary ? 'Principal' : value.name}</strong>
-                          <small>
-                            {value.address.slice(0, 8)}…{value.address.slice(-4)}
-                            <br />
-                            Rede {value.network}
-                          </small>
-                        </span>
-                      </label>
-                    ))}
+            <section className="mobile-wallet-cards">
+              <div className="section-heading">
+                <h2>
+                  {connectedWallet === wallet?.id ? 'Carteira conectada' : 'Carteiras cadastradas'}
+                </h2>
+                <button
+                  type="button"
+                  className="text-button"
+                  onClick={() => setWalletPickerOpen(true)}
+                >
+                  Trocar carteira
+                </button>
+              </div>
+              {registeredWallets.length ? (
+                <fieldset className="wallet-selector registered-wallet-cards">
+                  <legend className="sr-only">Selecionar carteira cadastrada</legend>
+                  {registeredWallets.map((value) => (
+                    <label key={value.id} className={wallet?.id === value.id ? 'selected' : ''}>
+                      <input
+                        type="radio"
+                        name="mobile-wallet"
+                        aria-label={`${value.name}, ${value.network}`}
+                        checked={wallet?.id === value.id}
+                        onChange={() => {
+                          setWalletId(value.id)
+                          setNetwork(value.network)
+                          form.setValue('walletType', value.type ?? 'MetaMask')
+                          setConnectedWallet('')
+                          setReview(null)
+                        }}
+                      />
+                      <span>
+                        <strong>{value.primary ? 'Principal' : value.name}</strong>
+                        <small>
+                          {value.ens || `${value.address.slice(0, 6)}…${value.address.slice(-4)}`}
+                          <br />
+                          {value.primary && value.network === 'Ethereum'
+                            ? 'Rede principal Ethereum'
+                            : `Rede ${value.network}`}
+                        </small>
+                      </span>
+                    </label>
+                  ))}
                 </fieldset>
               ) : (
                 <p>Nenhuma carteira cadastrada.</p>
+              )}
+            </section>
+            {!isMobile && costs}
+            <div className="checkout-wallets">
+              <h2>Carteira e rede</h2>
+              <fieldset className="wallet-selector provider-selector">
+                <legend className="sr-only">Tipo de conexão</legend>
+                {['WalletConnect', 'MetaMask', 'Coinbase Wallet'].map((provider) => (
+                  <label
+                    key={provider}
+                    className={form.watch('walletType') === provider ? 'selected' : ''}
+                  >
+                    <input
+                      type="radio"
+                      name="provider"
+                      value={provider}
+                      checked={form.watch('walletType') === provider}
+                      onChange={() => {
+                        form.setValue('walletType', provider)
+                        setConnectedWallet('')
+                        setReview(null)
+                      }}
+                    />
+                    <span className="provider-mobile-mark">
+                      <img
+                        src={`/images/vectors/${provider === 'WalletConnect' ? 'browser-wallet-mark-w-70243-316.svg' : provider === 'MetaMask' ? 'browser-wallet-mark-m-70243-315.svg' : 'browser-wallet-23-1379.svg'}`}
+                        alt=""
+                      />
+                    </span>
+                    <span className="provider-mobile-name">{provider}</span>
+                    {provider === 'WalletConnect' ? (
+                      <span className="wallet-badge provider-desktop-name">
+                        METAMASK · WALLETCONNECT · COINBASE
+                      </span>
+                    ) : (
+                      <span className="provider-desktop-name">{provider}</span>
+                    )}
+                  </label>
+                ))}
+              </fieldset>
+              {registeredWallets.filter((value) => value.network === network).length > 1 && (
+                <div className="field">
+                  <label htmlFor="registered-wallet">Carteira cadastrada</label>
+                  <select
+                    id="registered-wallet"
+                    value={wallet?.id ?? ''}
+                    onChange={(event) => {
+                      setWalletId(event.target.value)
+                      setConnectedWallet('')
+                      setReview(null)
+                    }}
+                  >
+                    {registeredWallets
+                      .filter((value) => value.network === network)
+                      .map((value) => (
+                        <option key={value.id} value={value.id}>
+                          {value.name} · {value.address.slice(0, 8)}…{value.address.slice(-4)}
+                        </option>
+                      ))}
+                  </select>
+                </div>
               )}
               {!wallet && (
                 <Button asChild variant="outline">
@@ -451,9 +564,7 @@ export function CheckoutPage() {
               {wallet && (
                 <div className="wallet-connection">
                   <p>
-                    {connectedWallet === wallet.id
-                      ? 'Carteira conectada (simulação)'
-                      : 'Conexão necessária'}
+                    {connectedWallet === wallet.id ? 'Carteira conectada' : 'Conexão necessária'}
                   </p>
                   <Button
                     id="wallet-connection-control"
@@ -476,33 +587,72 @@ export function CheckoutPage() {
                 {errorMessage(reviewing.error)}
               </p>
             )}
-            <Button
-              type="submit"
-              form="collector-form"
-              className="full-width review-button"
-              disabled={
-                reviewing.isPending ||
-                quote.isError ||
-                quote.isPending ||
-                connectedWallet !== wallet?.id
-              }
-            >
-              {reviewing.isPending ? 'Revalidando…' : 'Revisar compra'}
-            </Button>
-            <p className="simulation-note">Demonstração: nenhum pagamento real será realizado.</p>
+            <div className="checkout-dock" ref={dockRef}>
+              {isMobile && costs}
+              <Button
+                type="submit"
+                form="collector-form"
+                className="full-width review-button"
+                disabled={
+                  reviewing.isPending ||
+                  quote.isError ||
+                  quote.isPending ||
+                  connectedWallet !== wallet?.id
+                }
+              >
+                {reviewing.isPending ? 'Revalidando…' : 'Confirmar compra'}
+              </Button>
+            </div>
           </aside>
         </div>
       )}
+      <Dialog open={walletPickerOpen} onOpenChange={setWalletPickerOpen} title="Trocar carteira">
+        <div className="stack">
+          <label htmlFor="wallet-picker-network">Rede da carteira</label>
+          <select
+            id="wallet-picker-network"
+            value={network}
+            onChange={(event) => {
+              setNetwork(event.target.value as Network)
+              setWalletId('')
+              setConnectedWallet('')
+              setReview(null)
+            }}
+          >
+            <option>Ethereum</option>
+            <option>Polygon</option>
+          </select>
+          {registeredWallets
+            .filter((value) => value.network === network)
+            .map((value) => (
+              <Button
+                key={value.id}
+                variant="outline"
+                onClick={() => {
+                  setWalletId(value.id)
+                  form.setValue('walletType', value.type ?? 'MetaMask')
+                  setConnectedWallet('')
+                  setReview(null)
+                  setWalletPickerOpen(false)
+                }}
+              >
+                {value.name}
+              </Button>
+            ))}
+          <Link to="/carteiras">Gerenciar carteiras</Link>
+          <Button onClick={() => setWalletPickerOpen(false)}>Concluir seleção</Button>
+        </div>
+      </Dialog>
       <Dialog
         open={connectOpen}
         onOpenChange={setConnectOpen}
         title="Conectar carteira"
         returnFocusId="wallet-connection-control"
-        description="Escolha a resposta da carteira simulada. Nenhuma extensão será aberta."
+        description="Autorize a conexão para continuar com a carteira selecionada."
       >
         <div className="stack">
           <Button disabled={connection.isPending} onClick={() => connection.mutate('connect')}>
-            Autorizar conexão simulada
+            Autorizar conexão
           </Button>
           <Button
             variant="outline"
@@ -519,7 +669,7 @@ export function CheckoutPage() {
           if (!open && !place.isPending) setReview(null)
         }}
         title="Revise sua compra"
-        description="Confira os itens e valores antes de enviar o pedido simulado."
+        description="Confira os itens e valores antes de confirmar sua compra."
       >
         {review && (
           <>
@@ -540,6 +690,21 @@ export function CheckoutPage() {
               </p>
             )}
             <QuoteSummary quote={review} />
+            {isMobile && (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setReview(null)
+                    setCollectorOpen(true)
+                    requestAnimationFrame(() => form.setFocus('name'))
+                  }}
+                >
+                  Editar dados
+                </Button>
+                <CouponForm collapsed id="review-coupon" />
+              </>
+            )}
             <Button
               className="full-width"
               onClick={() => void confirm()}

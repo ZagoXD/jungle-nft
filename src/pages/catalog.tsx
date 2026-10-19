@@ -34,6 +34,19 @@ export function CatalogPage() {
     })
   const filters = (prefix: string) => (
     <div className="filters stack">
+      <div className="field mobile-sort-field">
+        <label htmlFor={`${prefix}-sort`}>Ordenar NFTs</label>
+        <select
+          id={`${prefix}-sort`}
+          value={search.sort}
+          onChange={(event) => change({ sort: event.target.value })}
+        >
+          <option value="recent">Listados recentemente</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="name">Nome</option>
+        </select>
+      </div>
       <div>
         <h3>Coleções</h3>
         {[
@@ -88,12 +101,12 @@ export function CatalogPage() {
           Preço: {minPrice} – {maxPrice} ETH
         </p>
         <Button size="sm" onClick={() => change({ minPrice, maxPrice })}>
-          Aplicar preço
+          Aplicar
         </Button>
       </div>
       <div>
         <h3>Rede</h3>
-        {['Ethereum', 'Polygon'].map((network) => (
+        {['Ethereum', 'Polygon', 'Solana'].map((network) => (
           <label
             className={`filter-choice ${search.network === network ? 'selected' : ''}`}
             key={network}
@@ -135,6 +148,7 @@ export function CatalogPage() {
               onChange={(event) => change({ collection: event.target.value })}
             >
               <option value="">Todas as coleções</option>
+              <option>Kurio Apes</option>
               <option>Kurio Originals</option>
               <option>Nomad Collection</option>
             </select>
@@ -286,8 +300,18 @@ export function CatalogPage() {
               >
                 Todos os NFTs
               </button>
-              <button onClick={() => change({ sort: 'name' })}>Novos lançamentos</button>
-              <button onClick={() => change({ sort: 'price-desc' })}>Em alta</button>
+              <button
+                className={search.sort === 'name' ? 'active' : ''}
+                onClick={() => change({ sort: 'name' })}
+              >
+                Novos lançamentos
+              </button>
+              <button
+                className={search.sort === 'price-desc' ? 'active' : ''}
+                onClick={() => change({ sort: 'price-desc' })}
+              >
+                Em alta
+              </button>
             </div>
             <label>
               Ordenar por:
@@ -434,12 +458,25 @@ export function CatalogPage() {
               />
               <div>
                 <small>
-                  {12 + i} de setembro | Leitura de {i + 2} min
+                  {[12, 13, 15, 15][i]} de setembro | Leitura de {[6, 2, 3, 2][i]} min
                 </small>
                 <h3>{title}</h3>
-                <p>Explore histórias e novas perspectivas para a sua coleção.</p>
+                <p>
+                  {
+                    [
+                      'Aprenda a colecionar, negociar e verificar ativos digitais.',
+                      'Conheça criadores que moldam a cultura digital.',
+                      'Entenda raridade, procedência, direitos autorais e utilidade.',
+                      'Proteja sua carteira, seus ativos e sua identidade.',
+                    ][i]
+                  }
+                </p>
                 <button
-                  onClick={() => notice('Artigos editoriais fora do escopo desta demonstração.')}
+                  onClick={() =>
+                    notice(
+                      'Estamos preparando esta história para você. Ela estará disponível em breve.',
+                    )
+                  }
                 >
                   Ler mais →
                 </button>

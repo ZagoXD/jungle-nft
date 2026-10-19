@@ -113,7 +113,7 @@ export async function seed(): Promise<Database> {
             'Golden Echo #108',
             'Golden Signal #160',
           ][i % 9] + (i >= 9 ? ` · ${Math.floor(i / 9) + 1}` : ''),
-        collection: i % 2 ? 'Nomad Collection' : 'Kurio Originals',
+        collection: i === 0 ? 'Kurio Apes' : i % 2 ? 'Nomad Collection' : 'Kurio Originals',
         creator: ['Yuga Labs', 'Digital Studio', 'Kurio Collective'][i % 3],
         category: [
           'Arte digital',
@@ -127,11 +127,13 @@ export async function seed(): Promise<Database> {
           'Utilidade',
         ][i % 9],
         price: eth(['1.19', '1.69', '1.99', '1.29', '1.39', '1.79', '0.99', '0.89', '0.39'][i % 9]),
+        compareAtPrice: i === 2 ? eth('2.29') : undefined,
+        rarity: i === 2 ? 'RARO' : undefined,
         image: artwork[imageIndex],
         gallery: Array.from({ length: 4 }, () => artwork[imageIndex]),
         description:
           'Uma peça única de uma coleção que conecta arte, identidade e comunidade. Descubra os detalhes e encontre a edição que combina com a sua coleção.',
-        network: i % 5 === 4 ? 'Polygon' : 'Ethereum',
+        network: i % 5 === 4 ? 'Polygon' : i > 8 && i % 5 === 3 ? 'Solana' : 'Ethereum',
         editions: [
           { id: 'standard', name: '1/50', stock: 8 + (i % 5) },
           { id: 'rare', name: '1/1', stock: i % 6 === 1 ? 0 : 1 },
@@ -150,6 +152,16 @@ export async function initializeDatabase() {
     db = stored?.schema === 1 ? stored : await seed()
   } catch {
     db = await seed()
+  }
+  // Enrich existing local catalogues without resetting carts, accounts or orders.
+  for (const [index, nft] of db.nfts.entries())
+    if (index > 8 && index % 5 === 3 && nft.version === 1) nft.network = 'Solana'
+  if (db.nfts[0]?.id === 'nft-1' && db.nfts[0].collection === 'Kurio Originals')
+    db.nfts[0].collection = 'Kurio Apes'
+  const neon = db.nfts.find((nft) => nft.id === 'nft-3')
+  if (neon) {
+    neon.compareAtPrice ??= eth('2.29')
+    neon.rarity ??= 'RARO'
   }
   db.quoteOwners ??= {}
   db.scenario = { ...defaultScenario, ...db.scenario }

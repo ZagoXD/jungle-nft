@@ -12,8 +12,10 @@ test('01 catálogo combina URL, filtros, ordenação, paginação e histórico',
   await page.getByRole('button', { name: 'Página 2', exact: true }).click()
   await expect(page).toHaveURL(/page=2/)
   if (isMobile) await page.getByRole('button', { name: 'Abrir filtros', exact: true }).click()
-  await page.getByRole('checkbox', { name: 'Arte digital', exact: true }).check()
-  await page.getByRole('checkbox', { name: 'Ethereum', exact: true }).check()
+  await page.getByRole('checkbox', { name: 'Arte digital', exact: true }).focus()
+  await page.keyboard.press('Space')
+  await page.getByRole('checkbox', { name: 'Ethereum', exact: true }).focus()
+  await page.keyboard.press('Space')
   if (isMobile) await page.getByRole('button', { name: 'Ver resultados', exact: true }).click()
   await expect(page).toHaveURL(/page=1/)
   await expect(page).toHaveURL(/category=Arte/)
@@ -67,13 +69,23 @@ test('03 login, refresh, expiração, retomada e troca de usuário', async ({ pa
   await expect(page.getByRole('dialog', { name: 'Entrar', exact: true })).toBeVisible()
 })
 
-test('04 favorito otimista persiste, falha faz rollback e permite repetir', async ({ page }) => {
+test('04 favorito otimista persiste, falha faz rollback e permite repetir', async ({
+  page,
+  isMobile,
+}) => {
   await login(page, undefined, undefined, '/nft/nft-1')
   const favorite = page.getByRole('button', { name: /Adicionar Emerald Ape.*favoritos/ })
   await request(page, 'PATCH', '/demo', { failNext: 'PUT /api/favorites', status: 503 })
   await favorite.click()
   await expect(page.locator('.toast')).toContainText('Falha simulada')
   await expect(favorite).toHaveAttribute('aria-pressed', 'false')
+  if (isMobile) {
+    const control = (await favorite.boundingBox())!
+    const notification = (await page.locator('.toast').boundingBox())!
+    expect(notification.y).toBeGreaterThanOrEqual(control.y + control.height)
+  }
+  // With a frozen clock the notice cannot expire on its own; dismiss it before retrying.
+  await page.getByRole('button', { name: 'Fechar notificação', exact: true }).click()
   await favorite.click()
   await expect(
     page.getByRole('button', { name: /Remover Emerald Ape.*favoritos/ }),
@@ -113,7 +125,7 @@ test('06 compra completa exige resposta confirmada e preserva recibo', async ({ 
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(page.getByRole('dialog', { name: 'Revise sua compra' })).toBeVisible()
   await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(
@@ -132,7 +144,7 @@ test('09 preço via Socket.IO durante revisão exige nova confirmação', async 
   await addFromDetail(page)
   await login(page, undefined, undefined, '/pagamento')
   await connectWallet(page)
-  await page.getByRole('button', { name: 'Revisar compra', exact: true }).click()
+  await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   await expect(
     page.getByRole('dialog', { name: 'Revise sua compra' }).getByTestId('quote-total'),
   ).toHaveText('1.1925 ETH')

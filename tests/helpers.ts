@@ -62,7 +62,7 @@ export async function addFromDetail(page: Page, id = 'nft-1') {
 }
 export async function connectWallet(page: Page) {
   await page.getByRole('button', { name: 'Conectar carteira', exact: true }).click()
-  await page.getByRole('button', { name: 'Autorizar conexão simulada' }).click()
+  await page.getByRole('button', { name: 'Autorizar conexão' }).click()
   await expect(
     page.getByRole('button', { name: 'Desconectar carteira', exact: true }),
   ).toBeVisible()

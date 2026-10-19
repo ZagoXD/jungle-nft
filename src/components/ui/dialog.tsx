@@ -32,6 +32,10 @@ export function Dialog({
         />
         <Primitive.Content
           className={`dialog-content ${className}`}
+          onInteractOutside={(event) => {
+            if ((event.detail.originalEvent.target as HTMLElement)?.closest('.toast'))
+              event.preventDefault()
+          }}
           onOpenAutoFocus={() => {
             returnFocus.current = document.activeElement as HTMLElement
           }}

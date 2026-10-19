@@ -1,5 +1,5 @@
 import { safeNext } from '../lib/navigation'
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { Link, useLocation, useNavigate, useSearch } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -19,9 +19,18 @@ const authSchema = z.object({
   confirmPassword: z.string(),
 })
 type AuthFields = z.infer<typeof authSchema>
-export function AuthPage() {
+export function AuthPage({
+  inline = false,
+  onClose,
+  onAuthenticated,
+}: {
+  inline?: boolean
+  onClose?: () => void
+  onAuthenticated?: () => void
+} = {}) {
+  const [inlineSignup, setInlineSignup] = useState(false)
   const location = useLocation(),
-    signup = location.pathname === '/cadastro',
+    signup = inline ? inlineSignup : location.pathname === '/cadastro',
     search = useSearch({ strict: false }) as { next?: string },
     navigate = useNavigate(),
     { establish, notice } = useSession()
@@ -46,7 +55,8 @@ export function AuthPage() {
     },
     onSuccess: () => {
       notice(signup ? 'Conta criada. Bem-vindo à Kurio!' : 'Bem-vindo de volta!')
-      void navigate({ to: safeNext(search.next) })
+      if (inline) onAuthenticated?.()
+      else void navigate({ to: safeNext(search.next) })
     },
     onError: (error) => {
       for (const [name, message] of Object.entries(fieldErrors(error)))
@@ -70,17 +80,31 @@ export function AuthPage() {
     }
     mutation.mutate(values)
   })
+  const changeMode = (event: MouseEvent<HTMLAnchorElement>, value: boolean) => {
+    if (!inline) return
+    event.preventDefault()
+    setInlineSignup(value)
+    setHelp(false)
+  }
   return (
     <>
-      <div aria-hidden="true" inert>
-        <CatalogPage />
-      </div>
+      {!inline && (
+        <div aria-hidden="true" inert>
+          <CatalogPage />
+        </div>
+      )}
       <Dialog
         open
         className="auth-dialog"
+        returnFocusId={inline ? 'cart-checkout' : undefined}
         onOpenChange={(open) => {
-          if (!open)
-            void navigate({ to: String(search.next).startsWith('/pagamento') ? '/carrinho' : '/' })
+          if (!open) {
+            if (inline) onClose?.()
+            else
+              void navigate({
+                to: String(search.next).startsWith('/pagamento') ? '/carrinho' : '/',
+              })
+          }
         }}
         title={signup ? 'Criar conta' : 'Entrar'}
         description={
@@ -97,15 +121,26 @@ export function AuthPage() {
           height="136"
         />
         <div className="auth-tabs">
-          <Link to="/login" search={{ next: search.next }} className={!signup ? 'selected' : ''}>
+          <Link
+            to="/login"
+            search={{ next: search.next }}
+            className={!signup ? 'selected' : ''}
+            onClick={(event) => changeMode(event, false)}
+          >
             Entrar
           </Link>
           <span>|</span>
-          <Link to="/cadastro" search={{ next: search.next }} className={signup ? 'selected' : ''}>
-            Criar conta
+          <Link
+            to="/cadastro"
+            search={{ next: search.next }}
+            className={signup ? 'selected' : ''}
+            onClick={(event) => changeMode(event, true)}
+          >
+            <span className="desktop-only">Criar conta</span>
+            <span className="mobile-only">Criar perfil de colecionador</span>
           </Link>
         </div>
-        <form className="auth-form stack" onSubmit={submit} noValidate>
+        <form className="auth-form stack" data-signup={signup} onSubmit={submit} noValidate>
           {signup && (
             <Field
               label="Nome de usuário"
@@ -156,8 +191,8 @@ export function AuthPage() {
           )}
           {help && (
             <p className="muted">
-              Contas de demonstração: alice@example.test ou bruno@example.test. Senha:
-              Colecionador123!
+              Estamos preparando a recuperação de senha. Você poderá redefini-la por e-mail em
+              breve.
             </p>
           )}
           {mutation.isError && (
@@ -166,7 +201,16 @@ export function AuthPage() {
             </p>
           )}
           <Button type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? 'Aguarde…' : signup ? 'Criar conta' : 'Entrar'}
+            {mutation.isPending ? (
+              'Aguarde…'
+            ) : signup ? (
+              <>
+                <span className="desktop-only">Criar conta</span>
+                <span className="mobile-only">Criar perfil</span>
+              </>
+            ) : (
+              'Entrar'
+            )}
           </Button>
         </form>
         <div className="social-auth">
@@ -174,7 +218,9 @@ export function AuthPage() {
           <Button
             variant="outline"
             onClick={() =>
-              notice('Login social fora do escopo: utilize a conta fictícia por e-mail.')
+              notice(
+                'O acesso com esta conta estará disponível em breve. Por enquanto, entre com seu e-mail.',
+              )
             }
           >
             <img src="/images/vectors/google-1-100.svg" alt="" width="20" height="20" />
@@ -183,7 +229,9 @@ export function AuthPage() {
           <Button
             variant="outline"
             onClick={() =>
-              notice('Login social fora do escopo: utilize a conta fictícia por e-mail.')
+              notice(
+                'O acesso com esta conta estará disponível em breve. Por enquanto, entre com seu e-mail.',
+              )
             }
           >
             <img src="/images/vectors/facebook-1-101.svg" alt="" width="20" height="20" />
@@ -192,11 +240,19 @@ export function AuthPage() {
         </div>
         <p className="auth-mobile-footer">
           {signup ? (
-            <Link to="/login" search={{ next: search.next }}>
-              Já tem uma conta? Entre na Kurio
+            <Link
+              to="/login"
+              search={{ next: search.next }}
+              onClick={(event) => changeMode(event, false)}
+            >
+              Já tem uma conta? Entre
             </Link>
           ) : (
-            <Link to="/cadastro" search={{ next: search.next }}>
+            <Link
+              to="/cadastro"
+              search={{ next: search.next }}
+              onClick={(event) => changeMode(event, true)}
+            >
               Novo na Kurio? Crie uma conta
             </Link>
           )}

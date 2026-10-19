@@ -1,17 +1,17 @@
 {
   "stats": {
-    "total": 48,
-    "expected": 47,
+    "expected": 67,
     "unexpected": 0,
     "flaky": 0,
     "skipped": 1,
+    "total": 68,
     "ok": true
   },
   "projects": [
     "desktop",
     "mobile"
   ],
-  "durationMs": 149433.041,
-  "command": "npm run test:e2e -- --workers=2",
-  "skipReason": "A verificação responsiva percorre 390, 768 e 1440 no projeto desktop; sua repetição mobile é dispensada."
+  "durationMs": 202444.903,
+  "command": "npm run test:e2e -- --workers 2 --reporter=list,html,json",
+  "skipReason": "A verificação responsiva já percorre as nove telas em 390, 768 e 1440 no projeto desktop; não se repete no projeto mobile."
 }
