@@ -1,0 +1,98 @@
+# KURIO · Jungle NFT
+
+Marketplace de NFTs implementado em React e TypeScript a partir do [desafio Jungle](https://github.com/junglegaming/frontend-challenge) e do [Figma de referência](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1). Compras, contas, carteiras e transações são simuladas; nenhuma extensão ou serviço privado é necessário.
+
+## Executar localmente
+
+Requer Node.js 24.14+ e npm. Na pasta do aplicativo:
+
+```sh
+npm ci
+npm run dev
+```
+
+Abra [localhost:5173](http://127.0.0.1:5173). Os mocks estão habilitados por padrão, inclusive no build de demonstração. As imagens e a fonte Roboto Mono são locais.
+
+| Comando               | Função                                             |
+| --------------------- | -------------------------------------------------- |
+| `npm run dev`         | Desenvolvimento com MSW e Socket.IO simulado       |
+| `npm run build`       | Verificação de tipos e build otimizado em `dist`   |
+| `npm run preview`     | Servir o build localmente                          |
+| `npm run typecheck`   | Verificar contratos e TypeScript                   |
+| `npm run lint`        | ESLint, sem warnings permitidos                    |
+| `npm run test:e2e`    | Chromium desktop e mobile; relatório HTML          |
+| `npm run test:visual` | Regressão de início, detalhe, carrinho e pagamento |
+| `npm run lighthouse`  | Build existente: 3 medições × 2 páginas × 2 perfis |
+
+Antes dos testes/auditorias, instale o navegador com `npx playwright install --no-shell chromium`. Em Linux, instale também as dependências do sistema indicadas pelo Playwright. Para rever resultados: `npx playwright show-report reports/playwright`. Traces de falhas ficam em `test-results/`. Para atualizar baselines deliberadamente, após comparação com o design: `npm run test:visual -- --update-snapshots`.
+
+## Contas e compra de demonstração
+
+| E-mail fictício      | Senha fictícia     |
+| -------------------- | ------------------ |
+| `alice@example.test` | `Colecionador123!` |
+| `bruno@example.test` | `Colecionador123!` |
+
+As duas contas têm carteiras Ethereum fictícias. Cadastro cria uma conta independente, inicialmente sem carteira. É possível cadastrar uma carteira de teste usando `0x` seguido de 40 caracteres hexadecimais. As senhas são guardadas somente como hashes no simulador. Esse mecanismo demonstrativo não substitui autenticação de produção.
+
+Explore o catálogo, abra um NFT, escolha edição/quantidade e compre. O carrinho visitante é mesclado ao da conta no login, limitado pelo estoque. Use `KURIO10` para desconto de 10%; `EXPIRED` reproduz cupom expirado. Outros códigos são inválidos. No pagamento, conecte uma carteira simulada, revise os dados e confirme. Alterações posteriores da cotação exigem nova confirmação.
+
+Após timeout, use **Recuperar tentativa**: o payload e a chave originais são reutilizados. Pedidos pendentes podem ser reabertos pela página de pedidos ou recarregados. Confirmação e recibo só aparecem após o estado confirmado retornado pela simulação. O explorador é explicitamente fictício.
+
+## Configuração e cenários
+
+`VITE_ENABLE_MOCKS=true` é o padrão; `.env.example` documenta a opção. Desabilitar MSW exige fornecer uma implementação compatível dos contratos; não existe backend de produção neste projeto.
+
+Abra **Cenários da demonstração** no rodapé ou visite `/demonstracao` para escolher sucesso, lentidão, vazio, falhas e alterações em tempo real, expirar a sessão ou restaurar os dados. Os cenários também podem ser controlados pelo endpoint de demonstração no console do navegador. Os controles abaixo são requisições reais interceptadas por MSW; não alteram estado React nem cache diretamente:
+
+```js
+// Restaurar todo o banco e o cenário padrão. Depois recarregue a página.
+await fetch('/api/demo/reset', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: '{}',
+})
+localStorage.removeItem('kurio.session')
+sessionStorage.clear()
+location.reload()
+```
+
+```js
+// Configurar uma condição sem apagar os dados. Exemplos abaixo.
+await fetch('/api/demo', {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ latency: 1500 }),
+})
+```
+
+| Payload de configuração                                                 | Cenário                                                                                 |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `{ latency: 1500 }`                                                     | Skeletons e latência lenta                                                              |
+| `{ variableLatency: true }`                                             | Busca com 1 caractere leva 1000 ms; outras, 80 ms; respostas fora de ordem              |
+| `{ empty: true }`                                                       | Catálogo vazio                                                                          |
+| `{ offline: true }`                                                     | Erro de conexão; `/api/demo` continua disponível para restaurar                         |
+| `{ offline: false, latency: 80, empty: false, variableLatency: false }` | Recuperação das condições normais                                                       |
+| `{ failNext: 'PUT /api/favorites', status: 503 }`                       | Próxima mutation falha; favorito otimista faz rollback                                  |
+| `{ failNext: 'PATCH /api/profile', status: 422 }`                       | Falha de validação retornada pela API                                                   |
+| `{ payment: 'declined' }`                                               | Próximo pedido será recusado; carrinho preservado                                       |
+| `{ orderDelay: 60000 }`                                                 | Pedido pendente para testar refresh/reconexão                                           |
+| `{ couponExpired: true }`                                               | Expira o cupom já aplicado e bloqueia o envio                                           |
+| `{ networkFee: '0.01' }`                                                | Altera a taxa; a revisão exige nova confirmação                                         |
+| `{ timeoutAfterCreate: true }`                                          | Pedido é criado, resposta demora 10 s, Axios expira em 8 s; recuperar a mesma tentativa |
+
+Para alterar preço/estoque e emitir `nft.updated`, envie `POST /api/demo/nft` com `{ id: 'nft-1', price: '2', stock: 2 }`. `duplicate: true` repete o mesmo evento; `old: true` emite uma versão antiga sem alterar os dados atuais. Para desconectar, `POST /api/demo/disconnect`; o cliente reconecta e consulta REST. `POST /api/demo/settle` resolve os pedidos pendentes de forma determinística. `POST /api/demo/order-event` com `{ id: 'order-...', old: true, duplicate: true }` emite eventos antigos/duplicados, sem mudar o pedido persistido.
+
+`POST /api/session/expire` exige `Authorization: Bearer <token da sessão fictícia>` e permite expirar a sessão durante o fluxo. Cadastro com e-mail existente reproduz HTTP 409; endereço inválido, cupom expirado e estoque insuficiente reproduzem validações/conflitos. Os testes compartilham os mesmos handlers e cenários.
+
+## Auditorias e arquitetura
+
+`npm run build && npm run lighthouse` produz relatórios HTML/JSON e `reports/lighthouse/summary.json`, com medianas, LCP, CLS, TBT, versões e condições. Cada medição abre um navegador limpo, usa MSW padrão e os assets reais. `CHROME_PATH` permite selecionar outro Chrome compatível; `LIGHTHOUSE_URL` permite auditar uma URL já servida.
+
+Veja [ARCHITECTURE.md](ARCHITECTURE.md) para contratos REST/eventos, sessão, carrinho, cache, idempotência, reconciliação, decisões de UX e limitações.
+
+Os testes instalam um relógio com início conhecido nos cenários de fluxo, configuram a latência e disparam eventos pela API de demonstração. As oito baselines foram produzidas com Chromium 156 no Windows, fontes locais e movimento reduzido. O teste responsivo percorre as nove telas em 390, 768 e 1440 px e verifica texto ampliado. Os relatórios atuais e as condições das medições estão em [reports/README.md](reports/README.md).
+
+## Publicar na Vercel
+
+Importe o repositório, selecione Vite, use `npm run build` e saída `dist`. Mantenha os mocks habilitados. `vercel.json` prepara o fallback SPA, preservando os caminhos dos assets e do service worker. Depois de publicar, valide acesso direto e refresh de `/nft/nft-1`, `/login` e das rotas privadas após login. A publicação será realizada pelo responsável pelo projeto; nenhuma URL publicada faz parte desta entrega local.

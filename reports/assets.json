@@ -1,0 +1,127 @@
+{
+  "encoder": "Pillow WebP quality 95, method 6; Lanczos resize",
+  "originalsPreserved": true,
+  "variants": [
+    {
+      "source": "2986a7cb16d09de8970824d2dd58bf0bb021702c.png",
+      "sourceSha256": "9b25d8d72395aa62f919f6ad33b95b7ba7bbfee6049e95cf159a319b03ecb8d9",
+      "file": "2986a7cb16d09de8970824d2dd58bf0bb021702c-192.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 9910,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.3779
+    },
+    {
+      "source": "2986a7cb16d09de8970824d2dd58bf0bb021702c.png",
+      "sourceSha256": "9b25d8d72395aa62f919f6ad33b95b7ba7bbfee6049e95cf159a319b03ecb8d9",
+      "file": "2986a7cb16d09de8970824d2dd58bf0bb021702c-384.webp",
+      "width": 384,
+      "height": 384,
+      "bytes": 30746,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.203
+    },
+    {
+      "source": "2986a7cb16d09de8970824d2dd58bf0bb021702c.png",
+      "sourceSha256": "9b25d8d72395aa62f919f6ad33b95b7ba7bbfee6049e95cf159a319b03ecb8d9",
+      "file": "2986a7cb16d09de8970824d2dd58bf0bb021702c-640.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 82186,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.1214
+    },
+    {
+      "source": "8459204731e6eba9d474cbc8ebc37071360d3ba5.png",
+      "sourceSha256": "f20b58b99de12b6eceede2090607e4b999275bba95de7674bb14f26b59666b21",
+      "file": "8459204731e6eba9d474cbc8ebc37071360d3ba5-192.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 10574,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.7727
+    },
+    {
+      "source": "8459204731e6eba9d474cbc8ebc37071360d3ba5.png",
+      "sourceSha256": "f20b58b99de12b6eceede2090607e4b999275bba95de7674bb14f26b59666b21",
+      "file": "8459204731e6eba9d474cbc8ebc37071360d3ba5-384.webp",
+      "width": 384,
+      "height": 384,
+      "bytes": 32778,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.3854
+    },
+    {
+      "source": "8459204731e6eba9d474cbc8ebc37071360d3ba5.png",
+      "sourceSha256": "f20b58b99de12b6eceede2090607e4b999275bba95de7674bb14f26b59666b21",
+      "file": "8459204731e6eba9d474cbc8ebc37071360d3ba5-640.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 74866,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.2302
+    },
+    {
+      "source": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16.png",
+      "sourceSha256": "2a42ba5adc341c3d0e1ad6905058e2762d995fc988113a7cd28b0d15f6a4ba28",
+      "file": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16-192.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 10494,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.8127
+    },
+    {
+      "source": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16.png",
+      "sourceSha256": "2a42ba5adc341c3d0e1ad6905058e2762d995fc988113a7cd28b0d15f6a4ba28",
+      "file": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16-384.webp",
+      "width": 384,
+      "height": 384,
+      "bytes": 33596,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.5058
+    },
+    {
+      "source": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16.png",
+      "sourceSha256": "2a42ba5adc341c3d0e1ad6905058e2762d995fc988113a7cd28b0d15f6a4ba28",
+      "file": "87580f2def9af0ce13f4b6f6ce17bb2449bcfc16-640.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 84372,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.3822
+    },
+    {
+      "source": "9df2ff42dd27ba657621c304557d1a855a4be6a5.png",
+      "sourceSha256": "326df4c1c08c31c88b9f407e51be3991e46667183af62aa1501927adc76f52b5",
+      "file": "9df2ff42dd27ba657621c304557d1a855a4be6a5-192.webp",
+      "width": 192,
+      "height": 192,
+      "bytes": 9028,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.3091
+    },
+    {
+      "source": "9df2ff42dd27ba657621c304557d1a855a4be6a5.png",
+      "sourceSha256": "326df4c1c08c31c88b9f407e51be3991e46667183af62aa1501927adc76f52b5",
+      "file": "9df2ff42dd27ba657621c304557d1a855a4be6a5-384.webp",
+      "width": 384,
+      "height": 384,
+      "bytes": 27096,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.1718
+    },
+    {
+      "source": "9df2ff42dd27ba657621c304557d1a855a4be6a5.png",
+      "sourceSha256": "326df4c1c08c31c88b9f407e51be3991e46667183af62aa1501927adc76f52b5",
+      "file": "9df2ff42dd27ba657621c304557d1a855a4be6a5-640.webp",
+      "width": 640,
+      "height": 640,
+      "bytes": 66480,
+      "quality": 95,
+      "meanAbsoluteChannelDifference": 1.1646
+    }
+  ],
+  "totalBytes": 472126
+}

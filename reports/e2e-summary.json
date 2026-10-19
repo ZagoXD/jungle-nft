@@ -1,0 +1,17 @@
+{
+  "stats": {
+    "total": 48,
+    "expected": 47,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "ok": true
+  },
+  "projects": [
+    "desktop",
+    "mobile"
+  ],
+  "durationMs": 149433.041,
+  "command": "npm run test:e2e -- --workers=2",
+  "skipReason": "A verificação responsiva percorre 390, 768 e 1440 no projeto desktop; sua repetição mobile é dispensada."
+}

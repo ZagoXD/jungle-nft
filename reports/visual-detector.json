@@ -1,0 +1,8 @@
+{
+  "clean": 0.0,
+  "altered": 0.02475587,
+  "restored": 0.0,
+  "threshold": 0.003,
+  "change": "hero translateY(40px), temporary browser stylesheet; removed after capture",
+  "passed": true
+}

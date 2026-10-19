@@ -1,0 +1,60 @@
+{
+  "name": "jungle-nft",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "test:e2e": "playwright test",
+    "test:visual": "playwright test tests/visual.spec.ts",
+    "lighthouse": "node scripts/lighthouse.mjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.2.2",
+    "@mswjs/socket.io-binding": "0.2.0",
+    "@tanstack/react-query": "5.104.4",
+    "@tanstack/react-router": "1.170.45",
+    "axios": "1.20.0",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "decimal.js": "10.6.0",
+    "msw": "2.15.0",
+    "radix-ui": "1.8.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-hook-form": "7.90.0",
+    "socket.io-client": "4.8.4",
+    "tailwind-merge": "3.7.0",
+    "tldts": "7.4.18",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "eslint": "10.13.0",
+    "lighthouse": "13.5.0",
+    "prettier": "3.9.10",
+    "puppeteer-core": "25.14.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "engines": {
+    "node": ">=24.14.0"
+  }
+}

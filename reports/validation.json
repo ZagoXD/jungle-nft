@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19T20:08:42.448303+00:00",
+  "sourceTreeSha256": "46021c1d65a99f70a075c6fa448e772e4b6cb1cfa26934e067e964b5cc07ccbc",
+  "sourceFiles": 194,
+  "commands": {
+    "npm ci": "passed; 407 packages installed from lockfile",
+    "npm run build": "passed",
+    "npm run typecheck": "passed",
+    "npm run lint": "passed, zero warnings",
+    "npx prettier --check .": "passed",
+    "npm run test:e2e -- --workers=2": {
+      "total": 48,
+      "expected": 47,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 1,
+      "ok": true
+    },
+    "npm run lighthouse": "12 runs completed; see lighthouse/summary.json"
+  },
+  "npmAuditVulnerabilities": 0,
+  "visualBaselines": 8,
+  "productionSmoke": {
+    "bootSkeleton": true,
+    "reducedMotion": true,
+    "evidence": [
+      {
+        "viewport": "desktop",
+        "width": 1440,
+        "login": true,
+        "signup": true,
+        "profile": true,
+        "wallets": true,
+        "confirmedOrder": true,
+        "runtimeErrors": []
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "login": true,
+        "signup": true,
+        "profile": true,
+        "wallets": true,
+        "confirmedOrder": true,
+        "runtimeErrors": []
+      }
+    ]
+  },
+  "deployment": "Delegated to the user; not published in this local delivery.",
+  "git": "No implementation commit or push; HEAD remains 9e261df."
+}

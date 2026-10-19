@@ -1,0 +1,26 @@
+{
+  "bootSkeleton": true,
+  "reducedMotion": true,
+  "evidence": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "login": true,
+      "signup": true,
+      "profile": true,
+      "wallets": true,
+      "confirmedOrder": true,
+      "runtimeErrors": []
+    },
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "login": true,
+      "signup": true,
+      "profile": true,
+      "wallets": true,
+      "confirmedOrder": true,
+      "runtimeErrors": []
+    }
+  ]
+}
