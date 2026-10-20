@@ -1,0 +1,380 @@
+{
+  "date": "2026-10-19T22:49:30.097112+00:00",
+  "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+  "before": {
+    "date": "2026-10-19T22:29:14.482Z",
+    "sourceTreeSha256": "7a62236038c74e1a1ff219535b915c73e60f98e69a30cacfb4634bf231139f9c",
+    "medians": [
+      {
+        "page": "inicio",
+        "profile": "mobile",
+        "scores": {
+          "performance": 88,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 3691.7000000000003,
+          "CLS": 9.685029662557901e-5,
+          "TBT": 71
+        }
+      },
+      {
+        "page": "inicio",
+        "profile": "desktop",
+        "scores": {
+          "performance": 100,
+          "accessibility": 98,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 729.4279999999999,
+          "CLS": 0.00024748601466049373,
+          "TBT": 0
+        }
+      },
+      {
+        "page": "detalhe",
+        "profile": "mobile",
+        "scores": {
+          "performance": 88,
+          "accessibility": 99,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 3478.5159999999996,
+          "CLS": 0.07710806942179954,
+          "TBT": 61
+        }
+      },
+      {
+        "page": "detalhe",
+        "profile": "desktop",
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "LCP": 865.0725000000001,
+          "CLS": 0.00024748601466049373,
+          "TBT": 0
+        }
+      }
+    ]
+  },
+  "after": [
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "scores": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3401.3450000000007,
+        "CLS": 0.000290550889876737,
+        "TBT": 76
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 98,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 676.8149999999999,
+        "CLS": 0.0002735537229938271,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "scores": {
+        "performance": 92,
+        "accessibility": 99,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3031.6499999999996,
+        "CLS": 0.07710806942179954,
+        "TBT": 64
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 785.383,
+        "CLS": 0.00024748601466049373,
+        "TBT": 0
+      }
+    }
+  ],
+  "runs": [
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 89,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3560.081999999999,
+        "CLS": 9.685029662557901e-5,
+        "TBT": 76
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "run": 2,
+      "scores": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3380.3500000000004,
+        "CLS": 0.000290550889876737,
+        "TBT": 69
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "run": 3,
+      "scores": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3401.3450000000007,
+        "CLS": 0.000290550889876737,
+        "TBT": 76
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 98,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 683.355,
+        "CLS": 0.0002735537229938271,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "run": 2,
+      "scores": {
+        "performance": 100,
+        "accessibility": 98,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 676.8149999999999,
+        "CLS": 0.00024748601466049373,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "run": 3,
+      "scores": {
+        "performance": 100,
+        "accessibility": 98,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 674.9649999999999,
+        "CLS": 0.0002735537229938271,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 92,
+        "accessibility": 99,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3035.5740000000005,
+        "CLS": 0.07710806942179954,
+        "TBT": 64
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "run": 2,
+      "scores": {
+        "performance": 92,
+        "accessibility": 99,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3029.8500000000004,
+        "CLS": 0.07710806942179954,
+        "TBT": 61
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "run": 3,
+      "scores": {
+        "performance": 92,
+        "accessibility": 99,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 3031.6499999999996,
+        "CLS": 0.07710806942179954,
+        "TBT": 64
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 784.751,
+        "CLS": 0.00024748601466049373,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "run": 2,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 804.73,
+        "CLS": 0.00024748601466049373,
+        "TBT": 0
+      }
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "run": 3,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "LCP": 785.383,
+        "CLS": 0.00024748601466049373,
+        "TBT": 0
+      }
+    }
+  ],
+  "allMedianTargetsMet": true,
+  "mobilePerformanceSamples": {
+    "inicio": [89, 90, 90],
+    "detalhe": [92, 92, 92]
+  },
+  "implementation": [
+    "Build creates Brotli sidecars for text resources; preview negotiates Accept-Encoding, preserving originals.",
+    "No application CSS, JavaScript, images or fonts were changed by this performance optimization.",
+    "Playwright accepts PLAYWRIGHT_BASE_URL to run the complete suite against the audited production build."
+  ],
+  "largestModules": [
+    {
+      "file": "browser-DgSRwxce.js",
+      "gzipBytes": 102454,
+      "brotliBytes": 84007
+    },
+    {
+      "file": "shared-CZa79jhe.js",
+      "gzipBytes": 82177,
+      "brotliBytes": 72339
+    },
+    {
+      "file": "app-mVFPF8Ju.js",
+      "gzipBytes": 70089,
+      "brotliBytes": 60613
+    }
+  ],
+  "transportVerification": {
+    "date": "2026-10-19T22:43:29.145Z",
+    "verifiedSidecars": 135,
+    "byteIdenticalAfterDecompression": true,
+    "negotiation": true,
+    "identityFallback": true,
+    "qualityZeroFallback": true,
+    "head": true,
+    "range": true,
+    "spaDeepLinks": true
+  },
+  "visualIntegrity": {
+    "unchangedJavaScriptChunkHashes": 17,
+    "unchangedGeneratedCssHash": "index-BAhpE-4N.css",
+    "passedBaselines": 10,
+    "snapshotsUpdated": false
+  },
+  "e2e": {
+    "expected": 67,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 1,
+    "total": 68,
+    "ok": true
+  },
+  "testCorrection": "The first production suite found an ambiguous coupon text locator matching both the background and the review modal. The test now scopes to the active summary; all cases were rerun. No product behavior was weakened.",
+  "deploymentLimit": "Preview middleware is local. External static hosting must negotiate compression itself; verify Content-Encoding and re-audit the public URL. Deployment remains delegated to the user."
+}

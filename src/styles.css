@@ -1533,11 +1533,6 @@ label {
   width: max-content;
   margin-inline: auto;
 }
-.transaction-id {
-  overflow-wrap: anywhere;
-  color: #cfb28c;
-  font-size: 12px;
-}
 .order-list-item {
   display: flex;
   gap: 16px;
@@ -1560,25 +1555,6 @@ label {
   margin: 8px 0;
 }
 .price-filter .button {
-  font-size: 12px;
-}
-.demo-link {
-  display: inline-block;
-  color: #e89b55;
-  margin-top: 12px;
-}
-.demo-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-}
-.demo-details {
-  margin-top: 40px;
-  padding: 20px;
-  background: #241612;
-}
-.demo-details pre {
-  overflow: auto;
   font-size: 12px;
 }
 @keyframes shimmer {
@@ -1768,10 +1744,6 @@ label {
   }
 }
 @media (max-width: 600px) {
-  .demo-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
   .account-layout {
     margin-top: 24px;
   }

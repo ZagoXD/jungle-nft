@@ -22,5 +22,10 @@
       "confirmedOrder": true,
       "runtimeErrors": []
     }
-  ]
+  ],
+  "date": "2026-10-19T22:49:30.097112+00:00",
+  "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+  "productionPurchases": 2,
+  "screenshots": 20,
+  "delivery": "Brotli-negotiated production preview"
 }

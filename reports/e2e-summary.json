@@ -1,4 +1,5 @@
 {
+  "date": "2026-10-19T22:49:30.097112+00:00",
   "stats": {
     "expected": 67,
     "unexpected": 0,
@@ -7,11 +8,10 @@
     "total": 68,
     "ok": true
   },
-  "projects": [
-    "desktop",
-    "mobile"
-  ],
-  "durationMs": 202444.903,
-  "command": "npm run test:e2e -- --workers 2 --reporter=list,html,json",
-  "skipReason": "A verificação responsiva já percorre as nove telas em 390, 768 e 1440 no projeto desktop; não se repete no projeto mobile."
+  "projects": ["desktop", "mobile"],
+  "durationMs": 130909.142,
+  "baseURL": "http://127.0.0.1:4173",
+  "build": "Vite production preview with Brotli negotiation",
+  "command": "PLAYWRIGHT_BASE_URL=http://127.0.0.1:4173 npm run test:e2e -- --workers 2 --reporter=list,html,json",
+  "skipReason": "The desktop responsive test itself covers all nine screens at 390/768/1440; no duplicate mobile execution."
 }

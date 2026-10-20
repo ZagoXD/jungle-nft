@@ -1,14 +1,14 @@
 {
-  "date": "2026-10-19T22:08:16.180308+00:00",
-  "sourceTreeSha256": "c41fd79124d473f8abae8a3f03d30d7034559f907cdce58f030a5a62bdda5c62",
+  "date": "2026-10-19T22:49:30.097112+00:00",
+  "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
   "sourceFiles": 201,
   "sourceHashMethod": "SHA-256 of sorted path:sha256(file) lines, excluding reports and Markdown.",
   "commands": {
-    "npm run build": "passed; includes TypeScript check",
+    "npm run build": "passed; TypeScript and production build",
     "npm run typecheck": "passed",
     "npm run lint": "passed; zero warnings",
     "npx prettier --check .": "passed",
-    "npm run test:e2e -- --workers 2 --reporter=list,html,json": {
+    "production Playwright suite": {
       "expected": 67,
       "unexpected": 0,
       "flaky": 0,
@@ -16,7 +16,7 @@
       "total": 68,
       "ok": true
     },
-    "npm run lighthouse": "Not repeated in this checkout follow-up; preceding 12-run audit preserved with its date and source fingerprint in lighthouseAudit."
+    "npm run lighthouse": "completed; 12 fresh measurements; all median thresholds met"
   },
   "visualBaselines": 10,
   "productionSmoke": {
@@ -43,7 +43,12 @@
         "confirmedOrder": true,
         "runtimeErrors": []
       }
-    ]
+    ],
+    "date": "2026-10-19T22:49:30.097112+00:00",
+    "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+    "productionPurchases": 2,
+    "screenshots": 20,
+    "delivery": "Brotli-negotiated production preview"
   },
   "fidelityReview": "fidelity-corrections.json",
   "lighthouseMedians": [
@@ -51,15 +56,15 @@
       "page": "inicio",
       "profile": "mobile",
       "scores": {
-        "performance": 89,
+        "performance": 90,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 3520.6270000000004,
-        "CLS": 9.685029662557901e-05,
-        "TBT": 73
+        "LCP": 3401.3450000000007,
+        "CLS": 0.000290550889876737,
+        "TBT": 76
       }
     },
     {
@@ -72,8 +77,8 @@
         "seo": 100
       },
       "metrics": {
-        "LCP": 747.052,
-        "CLS": 0.00024748601466049373,
+        "LCP": 676.8149999999999,
+        "CLS": 0.0002735537229938271,
         "TBT": 0
       }
     },
@@ -81,28 +86,28 @@
       "page": "detalhe",
       "profile": "mobile",
       "scores": {
-        "performance": 90,
+        "performance": 92,
         "accessibility": 99,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 3469.4840000000004,
-        "CLS": 0.004041298741012796,
-        "TBT": 63
+        "LCP": 3031.6499999999996,
+        "CLS": 0.07710806942179954,
+        "TBT": 64
       }
     },
     {
       "page": "detalhe",
       "profile": "desktop",
       "scores": {
-        "performance": 99,
+        "performance": 100,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 857.342,
+        "LCP": 785.383,
         "CLS": 0.00024748601466049373,
         "TBT": 0
       }
@@ -110,17 +115,16 @@
   ],
   "deployment": "Delegated to the user. No deployment performed.",
   "git": {
-    "baseCommit": "e353a2027cf7e55c4902f31823840c8a5d4c565d",
-    "newCommit": false,
-    "push": false
+    "baseCommit": "0c1110081f7dc3e72e6262de80f99de715915b27",
+    "baseMessage": "app v2",
+    "basePreviouslyPushed": true,
+    "newCommitThisReview": false,
+    "pushThisReview": false
   },
   "dependencyAudit": "Lockfile unchanged; previous same-day zero-vulnerability audit retained in dependencies.json.",
   "cleanup": {
     "removedBytes": 591344,
-    "removed": [
-      "superseded Playwright HTML report",
-      "temporary raw Playwright JSON report"
-    ],
+    "removed": ["superseded Playwright HTML report", "temporary raw Playwright JSON report"],
     "viteCacheRemoval": "blocked by automatic permission review: blocked by policy",
     "viteCacheBytesRetained": 12403062,
     "mobileReviewTemporaryReport": {
@@ -137,16 +141,41 @@
       "removedBytes": 79745,
       "removed": "Temporary raw Playwright JSON; HTML and compact summary retained",
       "removalVerified": true
+    },
+    "finalReadmeReview": {
+      "removedBytes": 79746,
+      "removed": "Temporary raw E2E JSON; current HTML and compact summary retained",
+      "removalVerified": true
+    },
+    "performanceReview": {
+      "removedBytes": 79628,
+      "removed": "Superseded raw E2E JSON; compact summary and final HTML retained",
+      "removalVerified": true
     }
   },
   "mobileReview": "fidelity-corrections.json#mobileReview",
   "requirementsAudit": "requirements-audit.json",
   "checkoutReview": "checkout-corrections.json",
   "lighthouseAudit": {
-    "rerunThisFollowUp": false,
-    "sourceTreeSha256": "a157e2bc7f37400db7aa656f168ecdefed495b484eaf076d19a6ad48e27eca53",
-    "date": "2026-10-19T21:39:34.216Z",
+    "rerunThisReview": true,
+    "date": "2026-10-19T22:43:05.747Z",
     "report": "lighthouse/summary.json",
-    "note": "Previous complete Lighthouse audit preserved and explicitly dated; not presented as a fresh measurement of this checkout correction."
-  }
+    "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+    "allMedianTargetsMet": true
+  },
+  "scopeCleanup": {
+    "removedScreens": ["/demonstracao", "/explorador/$id"],
+    "removedFile": "src/pages/demo.tsx",
+    "removedComponents": ["DemoPage", "ExplorerPage"],
+    "removedExclusiveStyles": ["demo-link", "demo-grid", "demo-details", "transaction-id"],
+    "unusedExportedReactComponentsFound": [],
+    "analysis": "TypeScript language-service references for every exported TSX function, plus noUnusedLocals/noUnusedParameters and ESLint.",
+    "retained": [
+      "Pedidos para consulta/retomada de compras",
+      "Favoritos persistentes da conta",
+      "Revisao e dados do colecionador exigidos pelo README",
+      "Endpoints MSW para configurar e resetar os cenarios"
+    ]
+  },
+  "performanceReview": "performance.json"
 }

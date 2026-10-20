@@ -41,13 +41,13 @@ No carrinho, **Conectar e finalizar** abre login/cadastro em modal e mantém a U
 
 No mobile, **Trocar carteira** abre a escolha de rede e carteira cadastrada. **Confirmar compra** abre a revisão dos itens e valores. Nela, **Editar dados** abre o formulário do colecionador, validado por **Salvar dados** e novamente antes do envio; o código promocional também fica disponível na revisão. Os painéis de compra do NFT, resumo do carrinho e confirmação do pagamento ficam fixos no rodapé, enquanto o conteúdo mantém espaço para rolagem. A galeria permite deslizar horizontalmente e usar os controles anterior/próxima. A ordenação está nos filtros.
 
-Após timeout, use **Recuperar tentativa**: o payload e a chave originais são reutilizados. Pedidos pendentes podem ser reabertos pela página de pedidos ou recarregados. Confirmação e recibo só aparecem após o estado confirmado retornado pela simulação. O botão do explorador abre o registro local do pedido; não consulta uma blockchain real.
+Após timeout, use **Recuperar tentativa**: o payload e a chave originais são reutilizados. Pedidos pendentes podem ser reabertos pela página de pedidos ou recarregados. Confirmação e recibo só aparecem após o estado confirmado retornado pela simulação. O botão do explorador informa que a consulta está em preparação; os dados da transação permanecem no recibo, sem consultar uma blockchain real.
 
 ## Configuração e cenários
 
 `VITE_ENABLE_MOCKS=true` é o padrão; `.env.example` documenta a opção. Desabilitar MSW exige fornecer uma implementação compatível dos contratos; não existe backend de produção neste projeto.
 
-Visite `/demonstracao` diretamente para escolher sucesso, lentidão, vazio, falhas e alterações em tempo real, expirar a sessão ou restaurar os dados. Os cenários também podem ser controlados pelo endpoint de demonstração no console do navegador. Os controles abaixo são requisições reais interceptadas por MSW; não alteram estado React nem cache diretamente:
+Os cenários são configurados pelos endpoints MSW no console do navegador, sem uma tela adicional no marketplace. Os controles abaixo são requisições reais interceptadas por MSW; não alteram estado React nem cache diretamente:
 
 ```js
 // Restaurar todo o banco e o cenário padrão. Depois recarregue a página.
@@ -92,6 +92,16 @@ Para alterar preço/estoque e emitir `nft.updated`, envie `POST /api/demo/nft` c
 ## Auditorias e arquitetura
 
 `npm run build && npm run lighthouse` produz relatórios HTML/JSON e `reports/lighthouse/summary.json`, com medianas, LCP, CLS, TBT, versões e condições. Cada medição abre um navegador limpo, usa MSW padrão e os assets reais. `CHROME_PATH` permite selecionar outro Chrome compatível; `LIGHTHOUSE_URL` permite auditar uma URL já servida.
+
+O build também gera versões Brotli (`.br`) dos recursos de texto. O preview negocia `Accept-Encoding` e mantém os arquivos originais como fallback; imagens e fontes permanecem inalteradas. No ambiente publicado, verifique a negociação de compressão do host, pois o middleware do preview não é executado por um servidor estático externo.
+
+Para executar a suíte contra o mesmo build auditado, mantenha `npm run preview -- --port 4173` em um terminal e, em outro terminal PowerShell, execute:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL = 'http://127.0.0.1:4173'
+npm run test:e2e
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
 
 Veja [ARCHITECTURE.md](ARCHITECTURE.md) para contratos REST/eventos, sessão, carrinho, cache, idempotência, reconciliação, decisões de UX e limitações.
 

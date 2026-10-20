@@ -79,17 +79,20 @@ test('código promocional abre sob demanda no pagamento e mantém validação da
     await connectWallet(page)
     await page.getByRole('button', { name: 'Confirmar compra', exact: true }).click()
   }
-  await expect(page.getByLabel('Código promocional', { exact: true })).toBeHidden()
-  await page
+  const summary = isMobile
+    ? page.getByRole('dialog', { name: 'Revise sua compra', exact: true })
+    : page.locator('.checkout-costs')
+  await expect(summary.getByLabel('Código promocional', { exact: true })).toBeHidden()
+  await summary
     .getByRole('button', { name: 'Tem um código promocional? Aplique aqui', exact: true })
     .click()
-  await page.getByLabel('Código promocional', { exact: true }).fill('EXPIRED')
-  await page.getByRole('button', { name: 'Aplicar', exact: true }).click()
-  await expect(page.locator(isMobile ? '#review-coupon-error' : '#coupon-error')).toBeVisible()
-  await page.getByLabel('Código promocional', { exact: true }).fill('KURIO10')
-  await page.getByRole('button', { name: 'Aplicar', exact: true }).click()
-  await expect(page.getByText('KURIO10 aplicado', { exact: true })).toBeVisible()
-  await expect(page.getByText('Taxa estimada', { exact: true })).toBeVisible()
+  await summary.getByLabel('Código promocional', { exact: true }).fill('EXPIRED')
+  await summary.getByRole('button', { name: 'Aplicar', exact: true }).click()
+  await expect(summary.locator(isMobile ? '#review-coupon-error' : '#coupon-error')).toBeVisible()
+  await summary.getByLabel('Código promocional', { exact: true }).fill('KURIO10')
+  await summary.getByRole('button', { name: 'Aplicar', exact: true }).click()
+  await expect(summary.getByText('KURIO10 aplicado', { exact: true })).toBeVisible()
+  await expect(summary.getByText('Taxa estimada', { exact: true })).toBeVisible()
 })
 
 test('carteira secundária copia dados e mantém validação de duplicidade', async ({ page }) => {

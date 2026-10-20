@@ -20,7 +20,7 @@ import { AccountLayout } from './account'
 
 export function OrderPage() {
   const { id } = useParams({ strict: false }),
-    { user } = useSession(),
+    { user, notice } = useSession(),
     client = useQueryClient()
   const order = useQuery({
     queryKey: ['order', user!.id, id],
@@ -127,46 +127,15 @@ export function OrderPage() {
           Transação confirmada na {value.wallet.network} de testes. A propriedade foi transferida
           para sua carteira conectada e registrada na rede de testes.
         </p>
-        <Button asChild>
-          <Link to="/explorador/$id" params={{ id: value.id }}>
-            Ver no Etherscan
-          </Link>
+        <Button
+          onClick={() =>
+            notice('Estamos preparando a consulta no explorador. Os detalhes estão neste recibo.')
+          }
+        >
+          Ver no Etherscan
         </Button>
       </div>
     </article>
-  )
-}
-export function ExplorerPage() {
-  const { id } = useParams({ strict: false }),
-    { user } = useSession()
-  const order = useQuery({
-    queryKey: ['order', user!.id, id],
-    queryFn: async ({ signal }) => (await api.get<Order>(`/orders/${id}`, { signal })).data,
-  })
-  return (
-    <>
-      <PageHeading
-        title="Detalhes da transação"
-        subtitle="Registro em ambiente local de testes. Nenhum ativo real foi transferido."
-      />
-      {order.isPending ? (
-        <Skeleton type="summary" />
-      ) : order.isError ? (
-        <ErrorState error={order.error} retry={() => void order.refetch()} />
-      ) : (
-        <div className="state-box">
-          <h2>{order.data.id}</h2>
-          <p>Estado: {order.data.status}</p>
-          <p className="transaction-id">{order.data.transaction}</p>
-          <p>Total: {formatEth(order.data.quote.total)} ETH</p>
-          <Button asChild>
-            <Link to="/pedido/$id" params={{ id: order.data.id }}>
-              Voltar ao pedido
-            </Link>
-          </Button>
-        </div>
-      )}
-    </>
   )
 }
 export function OrdersPage() {

@@ -34,9 +34,6 @@ const WalletsPage = lazy(() =>
 const CheckoutPage = lazy(() =>
   import('./pages/checkout').then((page) => ({ default: page.CheckoutPage })),
 )
-const ExplorerPage = lazy(() =>
-  import('./pages/orders').then((page) => ({ default: page.ExplorerPage })),
-)
 const FavoritesPage = lazy(() =>
   import('./pages/orders').then((page) => ({ default: page.FavoritesPage })),
 )
@@ -44,7 +41,6 @@ const OrderPage = lazy(() => import('./pages/orders').then((page) => ({ default:
 const OrdersPage = lazy(() =>
   import('./pages/orders').then((page) => ({ default: page.OrdersPage })),
 )
-const DemoPage = lazy(() => import('./pages/demo').then((page) => ({ default: page.DemoPage })))
 
 const root = createRootRoute({
   component: () => (
@@ -149,17 +145,6 @@ const favorites = createRoute({
     </Protected>
   ),
 })
-const explorer = createRoute({
-  getParentRoute: () => root,
-  path: '/explorador/$id',
-  beforeLoad: guard,
-  component: () => (
-    <Protected>
-      <ExplorerPage />
-    </Protected>
-  ),
-})
-const demo = createRoute({ getParentRoute: () => root, path: '/demonstracao', component: DemoPage })
 const router = createRouter({
   defaultPreload: 'intent',
   routeTree: root.addChildren([
@@ -174,8 +159,6 @@ const router = createRouter({
     order,
     orders,
     favorites,
-    explorer,
-    demo,
   ]),
 })
 export function App() {

@@ -60,6 +60,12 @@ test('compra operável pelo teclado, do detalhe ao recibo', async ({ page }) => 
   await expect(
     page.getByRole('heading', { name: 'Seus NFTs agora estão na sua carteira' }),
   ).toBeVisible()
+  const receiptUrl = page.url()
+  await activate(page.getByRole('button', { name: 'Ver no Etherscan', exact: true }))
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Estamos preparando a consulta no explorador.' }),
+  ).toBeVisible()
+  await expect(page).toHaveURL(receiptUrl)
 })
 
 test('precisão decimal, limites inteiros, cotação privada e idempotência canônica', async ({

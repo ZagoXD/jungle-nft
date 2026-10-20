@@ -1,23 +1,29 @@
-# Validação da revisão local
+# Validação atual: performance e fluxos
 
-A suíte Chromium atual contém **68 casos: 67 aprovados, zero falhas, zero instáveis e uma repetição dispensada**. A verificação responsiva já percorre as nove telas em 390, 768 e 1440 no projeto desktop; por isso não se repete no mobile. Execução com dois workers e contextos isolados, sem atualizar snapshots na suíte final.
+O build completo atingiu todas as metas Lighthouse nas medianas de três medições por página/perfil. Os resultados anteriores P88/P88 mobile foram substituídos pelos doze relatórios atuais; o resumo anterior consta em [performance.json](performance.json).
 
-- [Relatório Playwright](playwright/index.html): `npx playwright show-report reports/playwright`.
-- [Resumo E2E](e2e-summary.json), [validação](validation.json) e [smoke do build](production-smoke.json).
-- [Correções do checkout](checkout-corrections.json): modal no carrinho, estados de carteiras e ajustes visuais solicitados.
-- [Revisão de fidelidade e mobile](fidelity-corrections.json) e [auditoria anterior dos 157 blocos do README](requirements-audit.json), com a referência desta correção complementar.
-- [Assets](assets.json), [dependências](dependencies.json) e [experimento anterior do detector visual](visual-detector.json) preservados.
+| Página  | Perfil  |   P |   A |  BP | SEO |     LCP |      CLS |   TBT |
+| ------- | ------- | --: | --: | --: | --: | ------: | -------: | ----: |
+| inicio  | mobile  |  90 | 100 | 100 | 100 | 3.401 s | 0.000291 | 76 ms |
+| inicio  | desktop | 100 |  98 | 100 | 100 | 0.677 s | 0.000274 |  0 ms |
+| detalhe | mobile  |  92 |  99 | 100 | 100 | 3.032 s | 0.077108 | 64 ms |
+| detalhe | desktop | 100 | 100 | 100 | 100 | 0.785 s | 0.000247 |  0 ms |
 
-Três novos cenários executam nos dois perfis e cobrem login/cadastro sem sair do carrinho, cancelamento e foco, sessão já ativa, mesclagem dos itens, conta sem carteiras, falha da API com retry, carregamento lento, refresh, botão Salvar carteira sem quebra, centralização da taxa e largura da linha do recibo. O helper da suíte verifica erros de runtime. O build concluiu duas compras sem erros e gerou vinte capturas fora do app, incluindo o modal sobre o carrinho em desktop e mobile.
+A inicial mobile teve amostras 89, 90 e 90; sua mediana é 90. Detalhe mobile: 92, 92 e 92. Todas as medições usam navegador limpo, throttling padrão mobile, MSW padrão, funcionalidades reais e os assets locais completos. [Condições e versões](lighthouse/summary.json), com doze pares de relatórios HTML/JSON.
 
-As dez baselines são oito telas completas (início, detalhe, carrinho e pagamento nos dois perfis) e dois recortes das edições, com tolerância menor para proteger sua borda elíptica. Foram revistas manualmente e passaram na suíte completa sem atualização. Comparação com o Figma é manual, usando os exports originais e as referências enviadas; os testes visuais comparam a aplicação às suas baselines.
+A melhora vem da entrega Brotli dos recursos de texto, negociada por Accept-Encoding no preview. Os originais continuam como fallback. Os 135 sidecars foram descompactados e comparados byte a byte; negociação, qualidade zero, HEAD, Range e rotas SPA foram verificados. Os três maiores módulos passaram de aproximadamente 255 KB gzip para 217 KB Brotli. Os hashes dos 17 módulos JavaScript e do CSS gerado permaneceram iguais aos anteriores à otimização; imagens e fontes não mudaram.
 
-## Lighthouse e publicação
+A suíte final foi executada contra esse build de produção: **68 casos, 67 aprovados, zero falhas, zero instáveis e uma repetição responsiva dispensada**. As dez baselines visuais passaram sem atualização. Um seletor ambíguo do teste de cupom foi delimitado ao resumo ativo; a suíte inteira foi repetida depois da correção.
 
-A última auditoria completa de Lighthouse está em [summary.json](lighthouse/summary.json), com data, doze relatórios HTML/JSON, versões, condições e medianas. **Ela foi executada antes desta correção pontual de checkout e não foi repetida nesta rodada.** O fingerprint correspondente está em `validation.json → lighthouseAudit`. Os resultados preservados foram: inicial P89 mobile/P100 desktop, detalhe P90 mobile/P99 desktop; Accessibility 98–100, Best Practices 100 e SEO 100. A inicial mobile ficou abaixo da meta 90; a ressalva e o custo de inicialização de aplicação/MSW e carregamento da arte permanecem documentados. Não se declara nova medição de performance para este build.
+- [Relatório Playwright](playwright/index.html) e [resumo E2E](e2e-summary.json).
+- [Auditoria dos 157 blocos do README](requirements-audit.json) e [validação](validation.json).
+- [Smoke do build](production-smoke.json): duas compras completas, desktop/mobile, vinte capturas e zero erros de runtime.
+- [Performance e integridade dos arquivos](performance.json).
 
-O deploy e o smoke da URL pública continuam delegados ao usuário. A base Git segue `e353a20` (`app v1`); **nenhum commit ou push foi feito nesta revisão**. Os relatórios funcionais anteriores nos mesmos caminhos foram substituídos pelos resultados atuais.
+Fluxos de catálogo/URL/histórico, autenticação, favoritos, carrinho/cupom, pagamento/revisão, carteiras, perfil, falhas, expiração, idempotência e reconexão Socket.IO foram revalidados. Nove telas em 390/768/1440, cenários por toque, foco, paisagem, reflow e painéis fixos cobertos. A comparação com exports do Figma foi manual em revisões anteriores; as baselines atuais verificam regressão da aplicação.
 
-## Ajustes dos painéis mobile
+## Publicação
 
-Nome de usuário alinhado à esquerda. Navegação com cor e aria-current da aba ativa. Compra do NFT, resumo do carrinho e confirmação do pagamento fixos no rodapé, com sombra, safe area e espaço reservado dinamicamente no conteúdo. Os atalhos Detalhes da compra e Dados do colecionador foram retirados da tela principal; editar dados e aplicar cupom continuam disponíveis na revisão. Novo teste mobile cobre abas, alinhamento, scroll e painéis em 390 × 844 e 414 × 640.
+O deploy permanece com o usuário. O middleware do preview não roda em um host estático externo: a publicação precisa negociar a compressão pelo próprio host. Validar Content-Encoding, acesso direto/refresh, mocks, Socket.IO e repetir a auditoria na URL pública. Essa validação continua pendente; a meta local de performance está cumprida.
+
+Base Git app v2 (0c11100), já enviada antes destas revisões. Nenhum novo commit/push. Registros de fidelidade e checkout são históricos; auditoria geral, E2E, smoke e Lighthouse foram atualizados nos mesmos caminhos.

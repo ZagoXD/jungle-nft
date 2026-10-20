@@ -2,9 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
+import { compressedDelivery } from './scripts/compressed-delivery.ts'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), compressedDelivery()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

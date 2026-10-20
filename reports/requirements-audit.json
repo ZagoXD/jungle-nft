@@ -1,27 +1,26 @@
 {
-  "reviewedAt": "2026-10-19T21:39:40.383036+00:00",
+  "reviewedAt": "2026-10-19T22:49:30.097112+00:00",
   "challengeReadmeSha256": "4f78906ab513c6999f4ff5fd18c9d9b43192be453d4a4d62ee0f6154bc11acd5",
-  "sourceTreeSha256": "a157e2bc7f37400db7aa656f168ecdefed495b484eaf076d19a6ad48e27eca53",
+  "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+  "sourceFiles": 201,
   "reviewedBlocks": 157,
   "allChallengeRequirementsFulfilled": false,
   "functionalRequirementsLocallyValidated": true,
   "statusCounts": {
-    "validado localmente": 133,
+    "validado localmente": 134,
     "contexto ou critério de avaliação; não representa pontuação atribuída": 21,
-    "meta não atingida": 1,
     "pendente de publicação pelo usuário": 2
   },
   "exceptions": {
-    "R152": "Deploy obrigatório delegado explicitamente ao usuário; URL pública não validada.",
-    "R153": "Rotas, refresh, MSW e Socket.IO ainda precisam de smoke na URL pública da revisão.",
-    "R133": "Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+    "R152": "Deploy obrigatorio delegado ao usuario; URL publica nao informada nem validada nesta revisao.",
+    "R153": "Correspondencia da versao publicada, acesso direto/refresh, MSW e Socket.IO precisam de smoke na URL publica."
   },
   "e2e": {
-    "expected": 60,
+    "expected": 67,
     "unexpected": 0,
     "flaky": 0,
     "skipped": 1,
-    "total": 61,
+    "total": 68,
     "ok": true
   },
   "lighthouseMedians": [
@@ -29,15 +28,15 @@
       "page": "inicio",
       "profile": "mobile",
       "scores": {
-        "performance": 89,
+        "performance": 90,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 3520.6270000000004,
-        "CLS": 9.685029662557901e-05,
-        "TBT": 73
+        "LCP": 3401.3450000000007,
+        "CLS": 0.000290550889876737,
+        "TBT": 76
       }
     },
     {
@@ -50,8 +49,8 @@
         "seo": 100
       },
       "metrics": {
-        "LCP": 747.052,
-        "CLS": 0.00024748601466049373,
+        "LCP": 676.8149999999999,
+        "CLS": 0.0002735537229938271,
         "TBT": 0
       }
     },
@@ -59,2607 +58,1628 @@
       "page": "detalhe",
       "profile": "mobile",
       "scores": {
-        "performance": 90,
+        "performance": 92,
         "accessibility": 99,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 3469.4840000000004,
-        "CLS": 0.004041298741012796,
-        "TBT": 63
+        "LCP": 3031.6499999999996,
+        "CLS": 0.07710806942179954,
+        "TBT": 64
       }
     },
     {
       "page": "detalhe",
       "profile": "desktop",
       "scores": {
-        "performance": 99,
+        "performance": 100,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
       "metrics": {
-        "LCP": 857.342,
+        "LCP": 785.383,
         "CLS": 0.00024748601466049373,
         "TBT": 0
       }
     }
   ],
-  "limits": [
-    "Figma comparison is manual against original exported frames, not automated pixel equality.",
-    "Clean npm ci was validated in the prior implementation; lockfile/dependencies unchanged in this revision.",
-    "No new commit, push or deployment authorized in this revision."
-  ],
-  "blocks": [
+  "lighthouseAudit": {
+    "rerunThisReview": true,
+    "date": "2026-10-19T22:43:05.747Z",
+    "report": "lighthouse/summary.json",
+    "sourceTreeSha256": "a63e2717c7396d615c34a663c74627a9261de741025994d8148e272145bafa0e",
+    "allMedianTargetsMet": true
+  },
+  "scopeCleanup": {
+    "removedScreens": ["/demonstracao", "/explorador/$id"],
+    "removedFile": "src/pages/demo.tsx",
+    "removedComponents": ["DemoPage", "ExplorerPage"],
+    "removedExclusiveStyles": ["demo-link", "demo-grid", "demo-details", "transaction-id"],
+    "unusedExportedReactComponentsFound": [],
+    "analysis": "TypeScript language-service references for every exported TSX function, plus noUnusedLocals/noUnusedParameters and ESLint.",
+    "retained": [
+      "Pedidos para consulta/retomada de compras",
+      "Favoritos persistentes da conta",
+      "Revisao e dados do colecionador exigidos pelo README",
+      "Endpoints MSW para configurar e resetar os cenarios"
+    ]
+  },
+  "visualComparisonLimit": "Comparacao com os exports originais do Figma foi manual em revisoes anteriores; dez baselines atuais verificam regressao da aplicacao, nao igualdade automatica pixel a pixel ao Figma.",
+  "requirements": [
     {
       "id": "R001",
       "section": "0",
       "subsection": "Introdução",
-      "tasks": [
-        "T00",
-        "T01",
-        "T06"
-      ],
+      "tasks": ["T00", "T01", "T06"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "README original relido integralmente; 157 blocos rastreados. Figma: exports/metadados originais preservados fora do app; comparacao visual anterior manual, regressao atual das dez baselines aprovada."
       ]
     },
     {
       "id": "R002",
       "section": "0",
       "subsection": "Introdução",
-      "tasks": [
-        "T00",
-        "T01",
-        "T06"
-      ],
+      "tasks": ["T00", "T01", "T06"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "README original relido integralmente; 157 blocos rastreados. Figma: exports/metadados originais preservados fora do app; comparacao visual anterior manual, regressao atual das dez baselines aprovada."
       ]
     },
     {
       "id": "R003",
       "section": "1",
       "subsection": "",
-      "tasks": [
-        "T06",
-        "T22",
-        "T30"
-      ],
+      "tasks": ["T06", "T22", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Nove telas obrigatorias operaveis; fluxos desktop/mobile aprovados. Removidas telas extras /demonstracao e /explorador/$id; acoes auxiliares informam disponibilidade futura, sem sucesso ficticio."
       ]
     },
     {
       "id": "R004",
       "section": "1",
       "subsection": "",
-      "tasks": [
-        "T06",
-        "T22",
-        "T30"
-      ],
+      "tasks": ["T06", "T22", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Nove telas obrigatorias operaveis; fluxos desktop/mobile aprovados. Removidas telas extras /demonstracao e /explorador/$id; acoes auxiliares informam disponibilidade futura, sem sucesso ficticio."
       ]
     },
     {
       "id": "R005",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R006",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R007",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R008",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R009",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R010",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R011",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R012",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R013",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R014",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R015",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R016",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R017",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R018",
       "section": "2",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T05",
-        "T25",
-        "T28"
-      ],
+      "tasks": ["T01", "T05", "T25", "T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "package.json e imports efetivos: React, TypeScript, TanStack Router/Query, Axios/REST, Socket.IO, Tailwind, shadcn/Radix, MSW, Playwright e Lighthouse. Build/tipos/lint aprovados."
       ]
     },
     {
       "id": "R019",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T06",
-        "T22"
-      ],
+      "tasks": ["T06", "T22"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R020",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T10"
-      ],
+      "tasks": ["T10"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/catalog.tsx; composição Figma, facets reais, filtros combinados, ordenação, paginação, histórico e vazio validados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R021",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T11",
-        "T12"
-      ],
+      "tasks": ["T11", "T12"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/detail.tsx; acesso direto, 404, quatro edições, indisponibilidade, quantidade, galeria e foco na ampliação aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R022",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T13",
-        "T14"
-      ],
+      "tasks": ["T13", "T14"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/cart.tsx e serviço; quantidades, remoção, refresh, merge visitante/login e subtração apenas do snapshot comprado aprovados. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R023",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T15"
-      ],
+      "tasks": ["T15"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/checkout.tsx; campos do layout, carteiras cadastradas, rede, conexão/recusa/desconexão, revisão e rascunho após expiração aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R024",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T17"
-      ],
+      "tasks": ["T17"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R025",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T08"
-      ],
+      "tasks": ["T08"],
       "status": "validado localmente",
       "auditEvidence": [
-        "AppState, guards e handlers de sessão; cadastro/conflito, refresh, logout/troca, expiração no checkout e 401 tardio de outra conta aprovados."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R026",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T08"
-      ],
+      "tasks": ["T08"],
       "status": "validado localmente",
       "auditEvidence": [
-        "AppState, guards e handlers de sessão; cadastro/conflito, refresh, logout/troca, expiração no checkout e 401 tardio de outra conta aprovados."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R027",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T18"
-      ],
+      "tasks": ["T18"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R028",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T19"
-      ],
+      "tasks": ["T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R029",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T06",
-        "T22",
-        "T30"
-      ],
+      "tasks": ["T06", "T22", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R030",
       "section": "3",
       "subsection": "",
-      "tasks": [
-        "T06",
-        "T22",
-        "T30"
-      ],
+      "tasks": ["T06", "T22", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R031",
       "section": "3",
       "subsection": "Catálogo e detalhe",
-      "tasks": [
-        "T07",
-        "T09",
-        "T10"
-      ],
+      "tasks": ["T07", "T09", "T10"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "pages/catalog.tsx; composição Figma, facets reais, filtros combinados, ordenação, paginação, histórico e vazio validados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R032",
       "section": "3",
       "subsection": "Catálogo e detalhe",
-      "tasks": [
-        "T07",
-        "T09",
-        "T10"
-      ],
+      "tasks": ["T07", "T09", "T10"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "pages/catalog.tsx; composição Figma, facets reais, filtros combinados, ordenação, paginação, histórico e vazio validados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R033",
       "section": "3",
       "subsection": "Catálogo e detalhe",
-      "tasks": [
-        "T07",
-        "T09",
-        "T10"
-      ],
+      "tasks": ["T07", "T09", "T10"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "pages/catalog.tsx; composição Figma, facets reais, filtros combinados, ordenação, paginação, histórico e vazio validados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R034",
       "section": "3",
       "subsection": "Catálogo e detalhe",
-      "tasks": [
-        "T11"
-      ],
+      "tasks": ["T11"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/detail.tsx; acesso direto, 404, quatro edições, indisponibilidade, quantidade, galeria e foco na ampliação aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R035",
       "section": "3",
       "subsection": "Catálogo e detalhe",
-      "tasks": [
-        "T12"
-      ],
+      "tasks": ["T12"],
       "status": "validado localmente",
       "auditEvidence": [
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R036",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T13"
-      ],
+      "tasks": ["T13"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/cart.tsx e serviço; quantidades, remoção, refresh, merge visitante/login e subtração apenas do snapshot comprado aprovados. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R037",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T13"
-      ],
+      "tasks": ["T13"],
       "status": "validado localmente",
       "auditEvidence": [
-        "pages/cart.tsx e serviço; quantidades, remoção, refresh, merge visitante/login e subtração apenas do snapshot comprado aprovados. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R038",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T14"
-      ],
+      "tasks": ["T14"],
       "status": "validado localmente",
       "auditEvidence": [
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R039",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T14"
-      ],
+      "tasks": ["T14"],
       "status": "validado localmente",
       "auditEvidence": [
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R040",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T20"
-      ],
+      "tasks": ["T20"],
       "status": "validado localmente",
       "auditEvidence": [
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R041",
       "section": "3",
       "subsection": "Carrinho",
-      "tasks": [
-        "T02",
-        "T14"
-      ],
+      "tasks": ["T02", "T14"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R042",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T14",
-        "T15",
-        "T19"
-      ],
+      "tasks": ["T14", "T15", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "pages/checkout.tsx; campos do layout, carteiras cadastradas, rede, conexão/recusa/desconexão, revisão e rascunho após expiração aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R043",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T14",
-        "T15",
-        "T19"
-      ],
+      "tasks": ["T14", "T15", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "pages/checkout.tsx; campos do layout, carteiras cadastradas, rede, conexão/recusa/desconexão, revisão e rascunho após expiração aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R044",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T14",
-        "T15",
-        "T19"
-      ],
+      "tasks": ["T14", "T15", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "QuoteSummary e quoteFor; ETH preciso, cupom expirado/inválido/removido, taxa/preço/estoque e nova revisão explícita aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "pages/checkout.tsx; campos do layout, carteiras cadastradas, rede, conexão/recusa/desconexão, revisão e rascunho após expiração aprovados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R045",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T16"
-      ],
+      "tasks": ["T16"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R046",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T16",
-        "T17",
-        "T21"
-      ],
+      "tasks": ["T16", "T17", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R047",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T16",
-        "T17"
-      ],
+      "tasks": ["T16", "T17"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R048",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T16",
-        "T17"
-      ],
+      "tasks": ["T16", "T17"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R049",
       "section": "3",
       "subsection": "Pagamento e confirmação",
-      "tasks": [
-        "T16",
-        "T17"
-      ],
+      "tasks": ["T16", "T17"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R050",
       "section": "3",
       "subsection": "Conta e sessão",
-      "tasks": [
-        "T07",
-        "T08",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T07", "T08", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "AppState, guards e handlers de sessão; cadastro/conflito, refresh, logout/troca, expiração no checkout e 401 tardio de outra conta aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R051",
       "section": "3",
       "subsection": "Conta e sessão",
-      "tasks": [
-        "T07",
-        "T08",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T07", "T08", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "AppState, guards e handlers de sessão; cadastro/conflito, refresh, logout/troca, expiração no checkout e 401 tardio de outra conta aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R052",
       "section": "3",
       "subsection": "Conta e sessão",
-      "tasks": [
-        "T07",
-        "T08",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T07", "T08", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "AppState, guards e handlers de sessão; cadastro/conflito, refresh, logout/troca, expiração no checkout e 401 tardio de outra conta aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "tests/flows.spec.ts, failures.spec.ts, checkout-entry.spec.ts e mobile-review.spec.ts: catalogo/URL/historico, detalhe, favorito, carrinho/cupom, login/cadastro, perfil/avatar/senha/carteiras, checkout/revisao e recibo."
       ]
     },
     {
       "id": "R053",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R054",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R055",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R056",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R057",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R058",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R059",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R060",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R061",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R062",
       "section": "4",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T07",
-        "T09",
-        "T12",
-        "T23"
-      ],
+      "tasks": ["T02", "T07", "T09", "T12", "T23"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/app.tsx, lib/catalogSearch.ts e navigation.ts; URL, histórico, refresh, 404 e proteção/retomada validados em flows.spec.ts.",
-        "Axios com AbortSignal, Query por recurso/usuário/parâmetros; cancelamento de busca lenta, retries e favorito otimista com rollback e isolamento validados.",
-        "FavoriteButton; persistência/rollback nos dois viewports e callbacks tardios isolados por token; sem restaurar cache de sessão anterior.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação."
+        "src/lib/state.tsx, api.ts, app.tsx; contratos tipados, cancelamento, cache por conta/parametros, rollback otimista, guards e descarte de respostas de sessoes antigas. E2E/rede/falhas aprovados."
       ]
     },
     {
       "id": "R063",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R064",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R065",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R066",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R067",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R068",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R069",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R070",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R071",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R072",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R073",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R074",
       "section": "5",
       "subsection": "",
-      "tasks": [
-        "T02",
-        "T03",
-        "T16",
-        "T18",
-        "T19"
-      ],
+      "tasks": ["T02", "T03", "T16", "T18", "T19"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/domain/contracts.ts e money.ts; network.spec.ts e edge-cases.spec.ts confirmam 0.1 + 0.2 exato, quantidades inteiras, HTTP 401/403/404/409/422, cotação privada/expirada e idempotência canônica.",
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "Tentativa persistida por usuário, trava síncrona, UUID e comparação canônica; duplo clique, timeout, conflito e estados terminais aprovados.",
-        "pages/account.tsx; perfil/avatar/senha persistentes, validações locais/API e senha sem texto claro aprovados nos dois projetos. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "WalletForm e serviço; principal/secundária, rede/endereço, erros e persistência após reload aprovados; fluxo de produção também exercitado. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado."
+        "ARCHITECTURE.md, domain/contracts.ts, domain/money.ts, mocks/handlers.ts e service.ts; endpoints, erros 4xx/5xx, precisao ETH e idempotencia com conflito de payload exercitados por tests/network.spec.ts e edge-cases.spec.ts."
       ]
     },
     {
       "id": "R075",
       "section": "6",
       "subsection": "",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R076",
       "section": "6",
       "subsection": "",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R077",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R078",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R079",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R080",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R081",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R082",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R083",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R084",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R085",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R086",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R087",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R088",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R089",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R090",
       "section": "6",
       "subsection": "Simulating Network Conditions and Failures",
-      "tasks": [
-        "T03",
-        "T04",
-        "T05"
-      ],
+      "tasks": ["T03", "T04", "T05"],
       "status": "validado localmente",
       "auditEvidence": [
-        "src/mocks/database.ts, service.ts e handlers.ts; 36 NFTs, nove categorias, quatro edições, dois usuários, persistência/reset e smoke de produção aprovados.",
-        "/demonstracao e API /api/demo; testes de vazio, ordem de respostas, offline, HTTP, cupom, taxa, estoque, expiração, timeout e recusa aprovados.",
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação."
+        "MSW REST + binding Socket.IO, duas contas ficticias, banco persistente/resetavel, cenarios configuraveis pelos endpoints documentados, ativos no build. Sem fixtures/banco nos componentes."
       ]
     },
     {
       "id": "R091",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R092",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R093",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R094",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R095",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R096",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R097",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R098",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R099",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R100",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R101",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R102",
       "section": "7",
       "subsection": "",
-      "tasks": [
-        "T05",
-        "T17",
-        "T20",
-        "T21"
-      ],
+      "tasks": ["T05", "T17", "T20", "T21"],
       "status": "validado localmente",
       "auditEvidence": [
-        "socket.io-client real, MSW e binding 0.2.0; network.spec.ts, flows grupo 09, failures grupo 10 e produção confirmam transporte e reconciliação.",
-        "pages/orders.tsx; snapshot imutável, confirmação somente após simulação, refresh, explorador fictício e quantidades adicionais preservadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado.",
-        "nft.updated com ID/versão; preço e estoque invalidam REST/cotação, evento antigo não muda o banco e nova confirmação é obrigatória.",
-        "order.updated com usuário/token/versão; deduplicação, terminalidade, fechamento/reconexão, REST e ausência de recompra aprovados."
+        "socket.io-client real, nft.updated/order.updated, IDs/versoes, duplicatas/antigos, isolamento, desconexao, reconciliacao REST e recuperacao de pedido pendente aprovados."
       ]
     },
     {
       "id": "R103",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R104",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R105",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R106",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R107",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R108",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R109",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R110",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R111",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R112",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R113",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R114",
       "section": "8",
       "subsection": "",
-      "tasks": [
-        "T00",
-        "T06",
-        "T22",
-        "T23",
-        "T24"
-      ],
+      "tasks": ["T00", "T06", "T22", "T23", "T24"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Assets originais, quinze exports, fontes e enunciado preservados localmente fora do app; assets de execução locais.",
-        "src/styles.css e components/ui; Roboto Mono e assets originais locais. Quinze frames de referência inspecionados; oito baselines e capturas complementares revisadas. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "edge-cases.spec.ts percorre nove telas em 390/768/1440 e texto ampliado sem overflow. Quinze frames fonte e capturas reais de nove telas revisados; desvios funcionais documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Skeletons de catálogo/detalhe/resumo e do arranque, shimmer e reduced motion; grupo 12, smoke de produção e CLS Lighthouse comprovam carregamento/recuperação.",
-        "Teclado do detalhe ao recibo, foco/trap/retorno, labels/erros, anúncios e zoom aprovados; Accessibility 98–100 nas auditorias. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Nove telas em 390/768/1440, toque em 390/414, paisagem e reflow ampliado; sem overflow. Galeria, filtros, navegacao ativa, formularios, paineis fixos e recibo aprovados. Teclado/foco/labels, shimmer/reduced motion e avisos acessiveis exercitados."
       ]
     },
     {
       "id": "R115",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R116",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R117",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R118",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R119",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R120",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R121",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R122",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R123",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R124",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R125",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R126",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R127",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R128",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R129",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R130",
       "section": "9",
       "subsection": "",
-      "tasks": [
-        "T25",
-        "T26",
-        "T27"
-      ],
+      "tasks": ["T25", "T26", "T27"],
       "status": "validado localmente",
       "auditEvidence": [
-        "playwright.config.ts, helpers e reset por contexto; relógio/latência/eventos controlados. Relatório HTML atual, screenshots/traces em falhas e execução paralela sem contaminação. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "61 casos Chromium: 60 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis; oito baselines passaram sem atualização na suíte final.",
-        "Oito baselines em tests/visual.spec.ts-snapshots; comparações limpas aprovadas. Alteração deliberada no navegador detectada (2,48% > 0,3%); restauração zerou a diferença. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow."
+        "Suite completa contra o build de producao auditado: 68 casos, 67 aprovados, uma repeticao dispensada, zero falhas/instaveis. Dez baselines passaram sem atualizacao; teclado, toque, sessao, compras, falhas e Socket.IO cobertos."
       ]
     },
     {
       "id": "R131",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R132",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R133",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
-      "status": "meta não atingida",
+      "tasks": ["T28"],
+      "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R134",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R135",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R136",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R137",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R138",
       "section": "10",
       "subsection": "",
-      "tasks": [
-        "T28"
-      ],
+      "tasks": ["T28"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Doze medições do build atual; medianas e métricas em reports/lighthouse/summary.json. Meta de performance 90 não atingida: inicio mobile: 89. Ver Lighthouse atual."
+        "Doze medicoes atuais do build completo com Brotli: inicio P90 mobile/P100 desktop; detalhe P92 mobile/P100 desktop. A98-100, BP100 e SEO100. Todas as medianas atingiram as metas; HTML/JSON, ambiente, versoes e LCP/CLS/TBT em reports/lighthouse. Ver performance.json para transporte e integridade visual."
       ]
     },
     {
       "id": "R139",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R140",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R141",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R142",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R143",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R144",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R145",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R146",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R147",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R148",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R149",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "contexto ou critério de avaliação; não representa pontuação atribuída",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R150",
       "section": "11",
       "subsection": "",
-      "tasks": [
-        "T30"
-      ],
+      "tasks": ["T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "Criterios e eliminatorios relidos. Evidencias locais presentes; pontuacao pertence ao avaliador, sem autoatribuicao de nota."
       ]
     },
     {
       "id": "R151",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario."
       ]
     },
     {
       "id": "R152",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "pendente de publicação pelo usuário",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario.",
+        "Deploy obrigatorio delegado ao usuario; URL publica nao informada nem validada nesta revisao."
       ]
     },
     {
       "id": "R153",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "pendente de publicação pelo usuário",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario.",
+        "Correspondencia da versao publicada, acesso direto/refresh, MSW e Socket.IO precisam de smoke na URL publica."
       ]
     },
     {
       "id": "R154",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario."
       ]
     },
     {
       "id": "R155",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario."
       ]
     },
     {
       "id": "R156",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario."
       ]
     },
     {
       "id": "R157",
       "section": "12",
       "subsection": "",
-      "tasks": [
-        "T01",
-        "T29",
-        "T30"
-      ],
+      "tasks": ["T01", "T29", "T30"],
       "status": "validado localmente",
       "auditEvidence": [
-        "package.json, package-lock.json, Vite/TS/Tailwind, components.json; instalação npm ci, build, tipos e lint aprovados.",
-        "README.md, ARCHITECTURE.md e reports/README.md conferidos contra fonte e comportamento; setup/contratos/cenários/cache/sessão/UX/transporte/limitações e deploy manual documentados. Revisão posterior a app v1: reports/fidelity-corrections.json e suíte final 60 aprovados/1 dispensado. Revisão mobile: três cenários por toque, retrato/paisagem, composição dos seis frames e nove telas em 390/768/1440, sem overflow.",
-        "Base publicada anteriormente como e353a20 (app v1). Correções atuais sem commit/push. Deploy e smoke da URL pública delegados ao usuário."
+        "README/ARCHITECTURE atualizados; comandos, contratos, variaveis, credenciais ficticias e reproducao/reset dos cenarios documentados. Base app v2 (0c11100) ja enviada anteriormente; limpeza desta revisao sem novo commit/push. Deploy/smoke publico pendentes com o usuario."
       ]
     }
   ],
-  "latestCheckoutReview": "checkout-corrections.json",
-  "latestSourceTreeSha256": "c41fd79124d473f8abae8a3f03d30d7034559f907cdce58f030a5a62bdda5c62",
-  "latestE2e": {
-    "expected": 67,
-    "unexpected": 0,
-    "flaky": 0,
-    "skipped": 1,
-    "total": 68,
-    "ok": true
-  },
-  "lighthouseAudit": {
-    "rerunThisFollowUp": false,
-    "sourceTreeSha256": "a157e2bc7f37400db7aa656f168ecdefed495b484eaf076d19a6ad48e27eca53",
-    "date": "2026-10-19T21:39:34.216Z",
-    "report": "lighthouse/summary.json",
-    "note": "Previous complete Lighthouse audit preserved and explicitly dated; not presented as a fresh measurement of this checkout correction."
-  }
+  "performanceReview": "performance.json"
 }
