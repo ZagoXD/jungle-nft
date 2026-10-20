@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-20T00:59:46.131724+00:00",
+  "sourceTreeSha256": "cdc45b5c7023d67b867a3ab1463d76e2cd164e509d7ae58ca2548e130e8ef96c",
+  "sourceFiles": 203,
+  "scope": "Mobile home hero background only; original Figma masked circles replace the approximate CSS radial gradient.",
+  "asset": {
+    "frameNodeId": "70395:240",
+    "nodeId": "14:5290",
+    "name": "Mask Group",
+    "path": "public/images/vectors/mobile-hero-background.svg",
+    "width": 366,
+    "height": 190,
+    "bytes": 1270,
+    "sha256": "6c6678f98575fc16acc1fbce060c2b806e1d9d4d29d6693593fc4a5a8e224641",
+    "export": "Original Figma browser SVG export, unchanged; two circles, rectangle and rounded mask; no text/artwork."
+  },
+  "assetBytesUnchangedFromOriginalExport": true,
+  "checks": {
+    "buildAndTypecheck": "passed",
+    "lint": "passed",
+    "format": "passed",
+    "e2e": { "expected": 67, "unexpected": 0, "flaky": 0, "skipped": 1, "total": 68, "ok": true }
+  },
+  "visual": {
+    "passedBaselines": 11,
+    "updated": ["inicio-mobile-win32.png"],
+    "added": ["hero-mobile-mobile-win32.png"],
+    "remainingBaselines": "Unchanged; passed desktop and mobile regression.",
+    "manualInspection": "Compared corrected hero screenshot with the original Figma background group and user reference."
+  },
+  "lighthouse": {
+    "date": "2026-10-20T00:57:26.379Z",
+    "report": "lighthouse/summary.json",
+    "runs": 12,
+    "medians": [
+      {
+        "page": "inicio",
+        "profile": "mobile",
+        "scores": { "performance": 90, "accessibility": 100, "best-practices": 100, "seo": 100 },
+        "metrics": { "LCP": 3424.1474999999996, "CLS": 0.000290550889876737, "TBT": 79 }
+      },
+      {
+        "page": "inicio",
+        "profile": "desktop",
+        "scores": { "performance": 100, "accessibility": 98, "best-practices": 100, "seo": 100 },
+        "metrics": { "LCP": 686.67, "CLS": 0.00024748601466049373, "TBT": 0 }
+      },
+      {
+        "page": "detalhe",
+        "profile": "mobile",
+        "scores": { "performance": 92, "accessibility": 99, "best-practices": 100, "seo": 100 },
+        "metrics": { "LCP": 3044.5200000000004, "CLS": 0.07710806942179954, "TBT": 60 }
+      },
+      {
+        "page": "detalhe",
+        "profile": "desktop",
+        "scores": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 100 },
+        "metrics": { "LCP": 805.214, "CLS": 0.00024748601466049373, "TBT": 0 }
+      }
+    ],
+    "allMedianTargetsMet": true
+  },
+  "git": "No commit or push.",
+  "deployment": "Local correction; public version not changed.",
+  "cleanup": {
+    "removedBytes": 80196,
+    "removed": [
+      "Temporary Figma export ZIP (569 bytes)",
+      "Redundant raw Playwright JSON (79627 bytes)"
+    ],
+    "removalVerified": true
+  }
+}

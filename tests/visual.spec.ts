@@ -1,6 +1,6 @@
 import { test, expect, reset, login, addFromDetail, connectWallet } from './helpers'
 
-test('regressão visual início, detalhe, carrinho e pagamento', async ({ page }) => {
+test('regressão visual início, detalhe, carrinho e pagamento', async ({ page, isMobile }) => {
   await reset(page, { latency: 0 })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   const capture = async (name: string) => {
@@ -25,6 +25,12 @@ test('regressão visual início, detalhe, carrinho e pagamento', async ({ page }
   }
   await expect(page.getByRole('link', { name: 'Ver Emerald Ape #042', exact: true })).toBeVisible()
   await capture('inicio')
+  if (isMobile) {
+    await expect(page.locator('.mobile-hero')).toHaveScreenshot('hero-mobile.png', {
+      animations: 'disabled',
+      maxDiffPixelRatio: 0.001,
+    })
+  }
   await page.goto('/nft/nft-1')
   await expect(page.getByRole('button', { name: /^(COMPRAR|Comprar NFT)$/ })).toBeVisible()
   await expect(page.locator('.edition-picker')).toHaveScreenshot('edicoes.png', {

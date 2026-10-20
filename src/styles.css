@@ -1923,7 +1923,7 @@ label {
     border-radius: 28px;
     min-height: 190px;
     gap: 6px;
-    background: radial-gradient(ellipse at 10% 20%, #8c6038 0, #51331e 45%, #241612 70%);
+    background: url('/images/vectors/mobile-hero-background.svg') center / 100% 100% no-repeat;
   }
   .mobile-hero h1 {
     font-size: 18px;

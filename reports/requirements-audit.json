@@ -1681,5 +1681,9 @@
       ]
     }
   ],
-  "performanceReview": "performance.json"
+  "performanceReview": "performance.json",
+  "latestFollowUp": {
+    "report": "mobile-hero-correction.json",
+    "note": "This document records the preceding review. Current source fingerprint, visual correction, E2E and Lighthouse measurements are in the follow-up report."
+  }
 }

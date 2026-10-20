@@ -1,29 +1,20 @@
-# Validação atual: performance e fluxos
+# Validação após correção do hero mobile
 
-O build completo atingiu todas as metas Lighthouse nas medianas de três medições por página/perfil. Os resultados anteriores P88/P88 mobile foram substituídos pelos doze relatórios atuais; o resumo anterior consta em [performance.json](performance.json).
+O fundo mobile usa agora o SVG original do Figma, exportado sem alterações. A inicial mobile teve a baseline atualizada e ganhou uma comparação específica do hero. As outras nove baselines permanecem iguais.
+
+A revisão atual e as evidências estão em [mobile-hero-correction.json](mobile-hero-correction.json). A otimização Brotli anterior está registrada historicamente em [performance.json](performance.json).
 
 | Página  | Perfil  |   P |   A |  BP | SEO |     LCP |      CLS |   TBT |
 | ------- | ------- | --: | --: | --: | --: | ------: | -------: | ----: |
-| inicio  | mobile  |  90 | 100 | 100 | 100 | 3.401 s | 0.000291 | 76 ms |
-| inicio  | desktop | 100 |  98 | 100 | 100 | 0.677 s | 0.000274 |  0 ms |
-| detalhe | mobile  |  92 |  99 | 100 | 100 | 3.032 s | 0.077108 | 64 ms |
-| detalhe | desktop | 100 | 100 | 100 | 100 | 0.785 s | 0.000247 |  0 ms |
+| inicio  | mobile  |  90 | 100 | 100 | 100 | 3.424 s | 0.000291 | 79 ms |
+| inicio  | desktop | 100 |  98 | 100 | 100 | 0.687 s | 0.000247 |  0 ms |
+| detalhe | mobile  |  92 |  99 | 100 | 100 | 3.045 s | 0.077108 | 60 ms |
+| detalhe | desktop | 100 | 100 | 100 | 100 | 0.805 s | 0.000247 |  0 ms |
 
-A inicial mobile teve amostras 89, 90 e 90; sua mediana é 90. Detalhe mobile: 92, 92 e 92. Todas as medições usam navegador limpo, throttling padrão mobile, MSW padrão, funcionalidades reais e os assets locais completos. [Condições e versões](lighthouse/summary.json), com doze pares de relatórios HTML/JSON.
+Doze medições novas (três por página/perfil), com assets e funcionalidades completos. Mediana de performance mobile: início 90 e detalhe 92; desktop 100 nas duas telas. Todas as metas de categoria cumpridas. [Condições, versões e amostras](lighthouse/summary.json).
 
-A melhora vem da entrega Brotli dos recursos de texto, negociada por Accept-Encoding no preview. Os originais continuam como fallback. Os 135 sidecars foram descompactados e comparados byte a byte; negociação, qualidade zero, HEAD, Range e rotas SPA foram verificados. Os três maiores módulos passaram de aproximadamente 255 KB gzip para 217 KB Brotli. Os hashes dos 17 módulos JavaScript e do CSS gerado permaneceram iguais aos anteriores à otimização; imagens e fontes não mudaram.
+Suíte completa no build: 68 casos, 67 aprovados, uma repetição responsiva dispensada, zero falhas/instáveis. Onze baselines visuais. [Playwright HTML](playwright/index.html), [resumo E2E](e2e-summary.json) e [validação](validation.json).
 
-A suíte final foi executada contra esse build de produção: **68 casos, 67 aprovados, zero falhas, zero instáveis e uma repetição responsiva dispensada**. As dez baselines visuais passaram sem atualização. Um seletor ambíguo do teste de cupom foi delimitado ao resumo ativo; a suíte inteira foi repetida depois da correção.
+Os fluxos de compra, conta, catálogo, persistência, erros e Socket.IO são revalidados pela suíte. O smoke detalhado anterior e a auditoria dos 157 blocos continuam identificados pela data e fingerprint originais; esta rodada altera apenas o fundo do hero e sua regressão visual.
 
-- [Relatório Playwright](playwright/index.html) e [resumo E2E](e2e-summary.json).
-- [Auditoria dos 157 blocos do README](requirements-audit.json) e [validação](validation.json).
-- [Smoke do build](production-smoke.json): duas compras completas, desktop/mobile, vinte capturas e zero erros de runtime.
-- [Performance e integridade dos arquivos](performance.json).
-
-Fluxos de catálogo/URL/histórico, autenticação, favoritos, carrinho/cupom, pagamento/revisão, carteiras, perfil, falhas, expiração, idempotência e reconexão Socket.IO foram revalidados. Nove telas em 390/768/1440, cenários por toque, foco, paisagem, reflow e painéis fixos cobertos. A comparação com exports do Figma foi manual em revisões anteriores; as baselines atuais verificam regressão da aplicação.
-
-## Publicação
-
-O deploy permanece com o usuário. O middleware do preview não roda em um host estático externo: a publicação precisa negociar a compressão pelo próprio host. Validar Content-Encoding, acesso direto/refresh, mocks, Socket.IO e repetir a auditoria na URL pública. Essa validação continua pendente; a meta local de performance está cumprida.
-
-Base Git app v2 (0c11100), já enviada antes destas revisões. Nenhum novo commit/push. Registros de fidelidade e checkout são históricos; auditoria geral, E2E, smoke e Lighthouse foram atualizados nos mesmos caminhos.
+Sem commit, push ou deploy nesta correção. A URL pública fornecida anteriormente ainda exige publicação do código local e conferência da correspondência da versão.

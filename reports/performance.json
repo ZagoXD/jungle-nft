@@ -376,5 +376,9 @@
     "ok": true
   },
   "testCorrection": "The first production suite found an ambiguous coupon text locator matching both the background and the review modal. The test now scopes to the active summary; all cases were rerun. No product behavior was weakened.",
-  "deploymentLimit": "Preview middleware is local. External static hosting must negotiate compression itself; verify Content-Encoding and re-audit the public URL. Deployment remains delegated to the user."
+  "deploymentLimit": "Preview middleware is local. External static hosting must negotiate compression itself; verify Content-Encoding and re-audit the public URL. Deployment remains delegated to the user.",
+  "latestFollowUp": {
+    "report": "mobile-hero-correction.json",
+    "note": "This document records the preceding review. Current source fingerprint, visual correction, E2E and Lighthouse measurements are in the follow-up report."
+  }
 }
